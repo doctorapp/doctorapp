@@ -106,8 +106,14 @@ describe User do
 		end
 
 		describe "user cannot be of type other than d/o/p/a" do
-			before { @user.user_type = 'k' }
-			it { should_not be_valid }
+			it "should not be valid" do
+				(('a'..'z').to_a - ['a','d','o','p']).each do |user_type|
+					@user.user_type = user_type
+					@user.should_not be_valid
+				end
+			end
 	 	end
 	end
+
+	
 end
