@@ -7,7 +7,7 @@
 development:
   adapter: postgresql
   host: localhost
-  username: doctorapp
+  username: yilei
   database: dcotorapp-dev
   connection: 5
 
@@ -17,7 +17,7 @@ development:
 test:
   adapter: postgresql
   host: localhost
-  username: doctorapp
+  username: yilei
   database: doctorapp-test
   connection: 5
 
