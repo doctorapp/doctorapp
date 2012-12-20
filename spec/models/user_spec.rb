@@ -3,18 +3,19 @@ require 'spec_helper'
 describe User do
 
 	before do
-		@user = User.new(name: "cyrus zhang", email: "cyrus.ylzhang@gmail.com", password: "foobar", password_confirmation: "foobar", active: "true", user_type: "d" )
+		@user = User.new(name: "cyrus zhang", email: "cyrus.ylzhang@gmail.com", password: "foobar", password_confirmation: "foobar", active: "true" )
 	end
 
 	subject { @user } 
 
 	it { should respond_to(:name) }
 	it { should respond_to(:email) }
-	it { should respond_to(:user_type) }		
+	it { should respond_to(:type) }		
 	it { should respond_to(:password) }
 	it { should respond_to(:password_confirmation) }
 	it { should respond_to(:password_digest) }
 	it { should respond_to(:active) }
+	its(:type) { should == nil }  # unitialized type from DB table
 
 	describe "when name is not present" do
     before { @user.name = " " }
@@ -30,6 +31,14 @@ describe User do
     before { @user.name = "a" * 51 }
     it { should_not be_valid }
   end
+
+	describe "type cannot be mass-assigned" do
+		it "should raise exception" do
+			expect do
+				User.new(name: "cyrus zhang", email: "cyrus.ylzhang@gmail.com", password: "foobar", password_confirmation: "foobar", active: "true", type: "Doctor" )
+			end.to raise_error(ActiveModel::MassAssignmentSecurity::Error) 
+		end
+	end
 
   describe "when email format is invalid" do
     it "should be invalid" do
@@ -85,35 +94,4 @@ describe User do
 		its(:active) { should_not be_true }
 	end
 
-	describe "user type" do
-		describe "when user is doctor" do
-			it "should be a doctor" do
-				@user.doctor?.should be_true
-				@user.office?.should be_false
-				@user.patient?.should be_false
-				@user.admin?.should be_false
-			end
-		end
-
-		describe "when user is patient" do
-			before { @user.user_type = 'p' }
-			it "should be a patient" do
-				@user.patient?.should be_true
-				@user.admin?.should be_false
-				@user.doctor?.should be_false
-				@user.office?.should be_false
-			end
-		end
-
-		describe "user cannot be of type other than d/o/p/a" do
-			it "should not be valid" do
-				(('a'..'z').to_a - ['a','d','o','p']).each do |user_type|
-					@user.user_type = user_type
-					@user.should_not be_valid
-				end
-			end
-	 	end
-	end
-
-	
 end

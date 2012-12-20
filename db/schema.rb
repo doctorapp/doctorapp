@@ -11,19 +11,47 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121218053217) do
+ActiveRecord::Schema.define(:version => 20121219185416) do
+
+  create_table "doctors_domains", :id => false, :force => true do |t|
+    t.integer "doctor_id", :null => false
+    t.integer "domain_id"
+  end
+
+  add_index "doctors_domains", ["doctor_id", "domain_id"], :name => "index_doctors_domains_on_doctor_id_and_domain_id", :unique => true
+
+  create_table "doctors_languages", :id => false, :force => true do |t|
+    t.integer "doctor_id",   :null => false
+    t.integer "language_id", :null => false
+  end
+
+  add_index "doctors_languages", ["doctor_id", "language_id"], :name => "index_doctors_languages_on_doctor_id_and_language_id", :unique => true
+
+  create_table "domains", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "languages", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.string   "user_type",       :limit => 1
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.string   "password_digest"
     t.boolean  "active"
+    t.string   "type"
+    t.string   "remember_token"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["user_type"], :name => "index_users_on_user_type"
+  add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
+  add_index "users", ["type"], :name => "index_users_on_type"
 
 end

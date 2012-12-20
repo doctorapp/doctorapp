@@ -1,0 +1,10 @@
+<% provide(:title, @doctor.name) %>
+<h1>Update your profile</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= render 'edit_form', conf_button: 'Save changes' %>
+    <%= gravatar_for @doctor %>
+    <a href="http://gravatar.com/emails" target="_blank">change</a>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<li>
+  <%= gravatar_for doctor, size: 52 %>
+  <%= link_to doctor.name, doctor %>
+	</br>
+	Domain:
+	<% doctor.domains.each_with_index do |domain, idx| %>
+		<%= domain.name %>
+		<% if idx < doctor.domains.size - 1  %>
+		,
+		<% end %>
+	<% end %>
+	</br>
+	Language:
+	<% doctor.languages.each_with_index do |language, idx| %>
+		<%= language.name %>
+		<% if idx < doctor.languages.size - 1 %>
+		,
+		<% end %>
+	<% end %>
+</li>
