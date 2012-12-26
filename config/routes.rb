@@ -10,9 +10,8 @@ Doctorapp::Application.routes.draw do
 	match '/signin', 					to: 'sessions#new'
 	match '/signout',   			to: 'sessions#destroy', via: :delete  # http DELETE
 
-	match '/signup_doctor', 	to: 'doctors#new'
+	match '/signup_doctor', 	to: 'doctors#new' 
 	match '/signup_patient', 	to: 'patients#new'
-# match '/signup',					to: 'patient#new'
 
 	match '/help', 						to: 'static_pages#help'
 	match '/about', 					to: 'static_pages#about'

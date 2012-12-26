@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 
 	before_filter :signed_in_user, only: [:edit, :upadte, :show, :index] 
 	before_filter :correct_user, only: [:edit, :update]
+	before_filter :signed_in_sign_up, only:[:new, :create]
 
 end
 

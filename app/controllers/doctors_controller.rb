@@ -1,7 +1,7 @@
 class DoctorsController < ApplicationController
 
 # before_filter :signed_in_user, only: [:edit, :update, :show, :index]
-#	before_filter :correct_user, only: [:edit, :update]A
+#	before_filter :correct_user, only: [:edit, :update]
 	before_filter :admin_user, only: [:destroy]
 
 	def index
