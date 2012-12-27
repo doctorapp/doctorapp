@@ -23,7 +23,7 @@ describe FavoriteDoctor do
     it { should respond_to(:patient_id) }
     its(:doctor_id) { should == doctor.id}
     its(:patient_id) { should == patient.id }
-		its(:patient) { should == patient }
+		its(:doctor) { should == doctor }
   end
 
 	describe "when doctor id is not present" do

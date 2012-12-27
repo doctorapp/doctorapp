@@ -1,0 +1,17 @@
+<% provide(:title, @doctor.name) %>
+<div class="row">
+	<aside class="span4">
+		<section>
+			<h1>
+				<%= gravatar_for @doctor, size:40 %>
+				<%= @doctor.name %>
+			</h1>
+		</section>
+		<section>
+			<!-- render 'shared/stats' -->
+		</section>
+	</aside>
+	<div class="span8">
+		<%= render 'favorite_form' if ( signed_in? && current_user.type == 'Patient') %>
+	</div>
+</div>

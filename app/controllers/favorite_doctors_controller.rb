@@ -1,17 +1,17 @@
 class FavoriteDoctorsController < ApplicationController
 	before_filter :signed_in_user
-# before_filter :signed_in_patient
 
+	respond_to :html, :js
 	def create
 		@doctor = Doctor.find(params[:favorite_doctor][:doctor_id])
 		current_user.favorite!(@doctor)
-		redirect_to @doctor
+		respond_with @doctor
 	end
 
 	def destroy
-		@doctor = Doctor.find(params[:favorite_doctor][:doctor_id])
+		@doctor = FavoriteDoctor.find(params[:id]).doctor
 		current_user.unfavorite!(@doctor)
-		redirect_to @doctor
+		respond_with @doctor
 	end
 
 end

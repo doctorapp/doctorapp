@@ -1,6 +1,8 @@
 class PatientsController < ApplicationController
 
 	before_filter :admin_user, only: [:destroy]
+	before_filter :signed_in_sign_up, only:[:new, :create]
+
 
 	def index
 		@patients = Patient.paginate(page: params[:page])

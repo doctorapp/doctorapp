@@ -3,6 +3,8 @@ class DoctorsController < ApplicationController
 # before_filter :signed_in_user, only: [:edit, :update, :show, :index]
 #	before_filter :correct_user, only: [:edit, :update]
 	before_filter :admin_user, only: [:destroy]
+	before_filter :signed_in_sign_up, only:[:new, :create]
+
 
 	def index
 		@doctors = Doctor.paginate(page: params[:page])

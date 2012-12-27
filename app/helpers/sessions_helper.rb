@@ -16,11 +16,34 @@ module SessionsHelper
     end
   end
 
+	def admin?
+		current_user.type == 'Admin'
+	end
+
+	def patient?
+		current_user.type == 'Patient' 
+	end
+
+	def doctor?
+		current_user.type == 'Doctor'
+	end
+
   def current_user=(user)
     @current_user = user
   end
 
   def current_user
+#		user = User.find_by_remember_token(cooies[:remember_token])
+#		if user.type = 'Patient'
+#			@current_user ||= Patient.find_by_remember_token(cookies[:remember_token])
+#		elsif user.type = 'Doctor'
+#			@current_user ||= Doctor.find_by_remember_token(cookies[:remember_token])
+#		elsif user.type = 'Admin'
+#			@current_user ||= Admin.find_by_remember_token(cookies[:remember_token])
+#		else
+#			@current_user = user
+#		end
+
     @current_user ||= User.find_by_remember_token(cookies[:remember_token])
   end
 
@@ -28,8 +51,12 @@ module SessionsHelper
     user == @current_user
   end
  
-	def admin?
-		current_user.type == 'Admin'
+	def current_patient=(patient)
+		@current_patient = patient
+	end
+
+	def current_patient
+		@current_patient ||= Patient.find_by_remember_token(cookies[:remember_token])
 	end
 
 	def correct_user

@@ -1,10 +1,18 @@
 Doctorapp::Application.routes.draw do
 
+	resources :patients do
+		member do
+			get :favorite_doctors
+		end
+	end
+
 	resources :doctors
-	resources :patients
+
 	resources :admins,		only: [:show]
 	resources :sessions, 	only: [:new, :create, :destroy]
-	
+	resources :favorite_doctors, only: [:create, :destroy]
+
+
 	root to: 'static_pages#home'
 
 	match '/signin', 					to: 'sessions#new'
