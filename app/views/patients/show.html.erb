@@ -1,1 +1,29 @@
-
+<% provide(:title, @title) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <%= gravatar_for @patient %>
+      <h1><%= @patient.name %></h1>
+      <span><%= link_to "view my profile", @patient %></span>
+    </section>
+    <section>
+      <%= render 'shared/stats' %>
+      <% if @doctors.any? %>
+        <div class="user_avatars">
+          <% @doctors.each do |doctor| %>
+            <%= link_to gravatar_for(doctor, size: 30), doctor %>
+          <% end %>
+        </div>
+      <% end %>
+    </section>
+  </aside>
+  <div class="span8">
+    <h3><%= @title %></h3>
+    <% if @doctors.any? %>
+      <ul class="users">
+        <%= render @doctors %>
+      </ul>
+      <%= will_paginate @doctors %>
+    <% end %>
+  </div>
+</div>

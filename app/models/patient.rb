@@ -1,4 +1,5 @@
 class Patient < User
+	
 	has_many :favorite_doctors, dependent: :destroy
 	has_many :doctors, through: :favorite_doctors, source: :doctor
 

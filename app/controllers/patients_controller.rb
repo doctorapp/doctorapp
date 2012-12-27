@@ -40,12 +40,20 @@ class PatientsController < ApplicationController
 
 	def show
 		@patient = Patient.find(params[:id])
+		@doctors = @patient.doctors.paginate(page: params[:page])
 	end
 
 	def destroy
 		Patient.find(params[:id]).destroy
 		flash[:success] = "Patient deleted!"
 		redirect_to patients_path
+	end
+
+	def favorite_doctors
+		@title = "Favorite doctors"
+		@patient = Patient.find(params[:id])
+		@doctors = @patient.doctors.paginate(page: params[:page])
+		render 'show'
 	end
 
 end
