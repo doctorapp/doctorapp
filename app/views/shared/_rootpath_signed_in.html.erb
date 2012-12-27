@@ -1,0 +1,5 @@
+<%= link_to "See all doctors", doctors_path %>
+</br>
+<% if current_user.type == 'Patient' %>
+	<%= link_to "See you favorite doctors", favorite_doctors_patient_path(current_user) %> 
+<% end %>
