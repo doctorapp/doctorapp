@@ -7,6 +7,7 @@ namespace :db do
 		make_domains
 		make_doctors_languages
 		make_doctors_domains
+		make_patients
 	end
 	
 	def make_admin
@@ -20,7 +21,7 @@ namespace :db do
 	def make_doctors
 		99.times do |n|
       name  = Faker::Name.name
-      email = "doctor-#{n+1}@railstutorial.org"
+      email = "doctor-#{n+1}@gsad.com"
       password  = "password"
       Doctor.create!(name: name,
                    email: email,
@@ -66,6 +67,24 @@ namespace :db do
 		  idx += 1
 		end
 
+	end
+
+	def make_patients
+		p = Patient.create!(name: "Patient User",
+                 email: "patient@gsad.com",
+                 password: "foobar",
+                 password_confirmation: "foobar",
+								 active: true)
+		99.times do |n|
+      name  = Faker::Name.name
+      email = "patient-#{n+1}@gsad.com"
+      password  = "password"
+      Patient.create!(name: name,
+                   email: email,
+                   password: password,
+                   password_confirmation: password,
+									 active: true )
+    end
 	end
 
 end

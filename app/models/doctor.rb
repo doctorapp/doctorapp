@@ -9,7 +9,7 @@ class Doctor < User
 # has_many :residence
 #	has_many :office through :residence
 
-# has_many :appointments
+# has_many :appointment
 
 # has_one :doctor_info
 

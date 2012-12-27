@@ -17,11 +17,12 @@ class User < ActiveRecord::Base
   
 	validates :password,
 		presence: true,
+		confirmation: true,
 		length: { minimum: 6 }, 
     if: lambda{ new_record? || !password.blank? }  
 	# validates only when creating a new record or changed password
 
-	validates :password_confirmation, presence: true
+	# validates :password_confirmation, presence: true
 
 
 	# validates_inclusion_of :active, in: [true, false]

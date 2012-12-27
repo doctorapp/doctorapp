@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121219185416) do
+ActiveRecord::Schema.define(:version => 20121226202703) do
 
   create_table "doctors_domains", :id => false, :force => true do |t|
     t.integer "doctor_id", :null => false
@@ -32,6 +32,17 @@ ActiveRecord::Schema.define(:version => 20121219185416) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "favorite_doctors", :force => true do |t|
+    t.integer  "doctor_id"
+    t.integer  "patient_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "favorite_doctors", ["doctor_id", "patient_id"], :name => "index_favorite_doctors_on_doctor_id_and_patient_id", :unique => true
+  add_index "favorite_doctors", ["doctor_id"], :name => "index_favorite_doctors_on_doctor_id"
+  add_index "favorite_doctors", ["patient_id"], :name => "index_favorite_doctors_on_patient_id"
 
   create_table "languages", :force => true do |t|
     t.string   "name"
