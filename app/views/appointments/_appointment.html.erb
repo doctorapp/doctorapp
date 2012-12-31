@@ -1,0 +1,26 @@
+<li>
+  Appointment title:
+  <span class="content"><%= appointment.title %></span>
+  </br>
+  <span class="timestamp">
+    start time: <%= appointment.start %>.
+  </span>
+  </br>
+  <span class="content">
+    doctor: <%= appointment.doctor_id %>.
+  </span>
+ 
+  <%= link_to 'SHOW', appointment , {:class => 'linkedTo'} %> | 
+
+  <%= link_to 'EDIT', edit_appointment_path(appointment) , {:class => 'linkedTo'} %> | 
+
+  <span> 
+      <% if current_user?(appointment.user) %>
+
+    		<%= link_to "DELETE", appointment, method: :delete,
+                                     data: { confirm: "Are you sure to cancel the appointment?" },
+                                     title: appointment.title, :class => 'linkedTo' 
+                                     %>
+  	  <% end %>
+  </span>
+</li>

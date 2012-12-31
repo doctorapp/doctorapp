@@ -13,6 +13,13 @@ Doctorapp::Application.routes.draw do
 	resources :favorite_doctors, only: [:create, :destroy]
 
 
+	resources :appointments do
+		member do
+			get :upcoming
+		end
+	end
+
+
 	root to: 'static_pages#home'
 
 	match '/signin', 					to: 'sessions#new'
@@ -20,6 +27,9 @@ Doctorapp::Application.routes.draw do
 
 	match '/signup_doctor', 	to: 'doctors#new' 
 	match '/signup_patient', 	to: 'patients#new'
+
+	match '/appointments/new', 		to: 'appointments#new'
+	match '/appointments/desroy', to: 'appointments#destroy', via: :delete
 
 	match '/help', 						to: 'static_pages#help'
 	match '/about', 					to: 'static_pages#about'

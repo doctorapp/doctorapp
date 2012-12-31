@@ -1,0 +1,15 @@
+//page.replace_html 'create_event', :partial => 'form'
+$('#create_event').html('<%= escape_javascript render(:partial => "form") %>');
+$('#create_event').dialog({
+        title: "New Appointment",
+        closeOnEscape:true,
+        modal: true,
+        width: 500,
+        draggable: true,
+        resizable: true,
+        close: function(event, ui){
+            $('#create_event').dialog('destroy')
+        }
+        
+    });
+

@@ -1,0 +1,45 @@
+
+<p id="notice"><%= notice %></p>
+
+<p style='font-size:20px; color:black; font-weight:bold'>
+    Appointment Details
+</p>
+</br>
+<p>
+  <b>Title:</b>
+  <%= @appointment.title %>
+</p>
+
+<p>
+  <b>Allday:</b>
+  <%= @appointment.allday %>
+</p>
+
+<p>
+  <b>Start:</b>
+  <%= @appointment.start %>
+</p>
+
+<p>
+  <b>End:</b>
+  <%= @appointment.end %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%= @appointment.url %>
+</p>
+
+<p>
+  <b>Editable:</b>
+  <%= @appointment.editable %>
+</p>
+
+<p>
+  <b>Source:</b>
+  <%= @appointment.source %>
+</p>
+
+
+<%= link_to 'Edit', edit_appointment_path(@appointment) , {:class => 'linkedTo'} %> |
+<%= link_to 'Back', appointments_path , { :class => 'linkedTo'} %>

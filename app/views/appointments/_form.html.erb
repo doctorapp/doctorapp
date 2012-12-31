@@ -1,0 +1,54 @@
+<%= form_for(@appointment) do |f| %>
+  <% if @appointment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+
+      <ul>
+      <% @appointment.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<script>
+  //var timeslot = sendOption('slotMinutes','appointments','new');
+  //alert("slot: "+timeslot);
+ 
+</script>
+
+  <% if @startdate==nil %>
+      <% defaultstarttime = Time.now %>
+       <% defaultendtime = Time.now+1.hour %>
+  <% else %>
+      <% defaultstarttime = @startdate %>
+       <% if @startdate==@enddate %>
+          <% defaultendtime = @enddate+1.hour %>
+       <% else %>
+          <% defaultendtime = @enddate %>
+       <% end %>
+
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :allday %>
+    <%= f.check_box :allday %> <br />
+  </div>
+
+  <div class="field">
+    <%= f.label :start %><br />
+    <%= f.datetime_select :start, :default => defaultstarttime, :minute_step => @timeslot, :ampm => true  %>
+  </div>
+  <div class="field">
+    <%= f.label :end %><br />
+    <%= f.datetime_select :end, :default => defaultendtime, :minute_step => @timeslot, :ampm => true %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
