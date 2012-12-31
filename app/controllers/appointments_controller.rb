@@ -35,14 +35,9 @@ class AppointmentsController < ApplicationController
   end
 
   # GET /appointments/new
-  # GET /appointments/new.json
   def new
     @appointment = current_user.appointments.new
-    #if params[:slotMinutes]
-    @timeslot = params[:slotminutes].to_f
-    @startdate = DateTime.parse(params[:startdate])
-    @enddate = DateTime.parse(params[:enddate])
-    @allDay = params[:allDay]
+		@timeslot ||= 30	# should be populated by docotr settings
 
     respond_to do |format|
       format.html #{render :locals => {:slotMinutes =>@slotMinutes} }# new.html.erb
@@ -67,20 +62,20 @@ class AppointmentsController < ApplicationController
   # POST /appointments.json
   def create
     @appointment = current_user.appointments.build(params[:appointment])
-    @user = current_user
-    @appointment.user_id= @user.id
+    @appointment.patient_id= current_user.id
+		@appointment.start = DateTime.strptime(params[:appointment][:start], '%m/%d/%Y %H:%M')
+		@appointment.end = DateTime.strptime(params[:appointment][:end],'%m/%d/%Y %H:%M')
     respond_to do |format|
       if @appointment.save
-        #format.html { redirect_to @appointment, notice: 'Appointment was successfully created.' }
         format.html { redirect_to root_url, notice: 'Appointment was successfully created.' }
         format.json { render json: @appointment, status: :created, location: @appointment }
         format.js { render :layout => false }
       else
-        flash.now[:error] = "Could not create appointment"
-        format.html { render 'static_pages/home' }
-        format.json { render json: @appointment.errors, status: :unprocessable_entity }
-        format.js { render :layout => false }
-      end
+				flash.now[:error] =  "Cannot create appointment. pid: #{@appointment.patient_id}. did: #{@appointment.doctor_id}. start: #{@appointment.start}. end: #{@appointment.end}. error: #{@appointment.errors.first}" 
+      	format.html { render 'static_pages/home' }
+				format.json { render json: @appointment.errors, status: :unpcoressable_entity }
+				format.js { render :layout => false }
+			end
     end
   end
 

@@ -13,3 +13,17 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
+
+$(function() {
+
+	$('#appointment_start').datetimepicker({
+		addslideraccess: true,
+		slideraccessargs: { touchonly: false }
+	});
+	
+	$('#appointment_end').datetimepicker({
+		addslideraccess: true,
+		slideraccessargs: { touchonly: false }
+	});
+
+});

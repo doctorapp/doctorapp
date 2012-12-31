@@ -28,9 +28,6 @@ Doctorapp::Application.routes.draw do
 	match '/signup_doctor', 	to: 'doctors#new' 
 	match '/signup_patient', 	to: 'patients#new'
 
-	match '/appointments/new', 		to: 'appointments#new'
-	match '/appointments/desroy', to: 'appointments#destroy', via: :delete
-
 	match '/help', 						to: 'static_pages#help'
 	match '/about', 					to: 'static_pages#about'
 	match '/contact',					to: 'static_pages#contact'

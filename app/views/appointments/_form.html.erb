@@ -1,54 +1,22 @@
 <%= form_for(@appointment) do |f| %>
-  <% if @appointment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@appointment.errors.count, "error") %> prohibited this appointment from being saved:</h2>
+	<%= render 'shared/error_messages', object: f.object %>
 
-      <ul>
-      <% @appointment.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+ 	<%= f.label :title %>
+  <%= f.text_field :title %>
 
-<script>
-  //var timeslot = sendOption('slotMinutes','appointments','new');
-  //alert("slot: "+timeslot);
- 
-</script>
+	<%= f.label "Choose your doctor" %>
+	<%= f.collection_select :doctor_id, current_user.doctors.all, :id, :name %>
 
-  <% if @startdate==nil %>
-      <% defaultstarttime = Time.now %>
-       <% defaultendtime = Time.now+1.hour %>
-  <% else %>
-      <% defaultstarttime = @startdate %>
-       <% if @startdate==@enddate %>
-          <% defaultendtime = @enddate+1.hour %>
-       <% else %>
-          <% defaultendtime = @enddate %>
-       <% end %>
+  <%= f.label :start %>
+ 	<%= f.text_field :start %>
+	
+	<%= f.label :end %>
+ 	<%= f.text_field :end %> 
 
-  <% end %>
+	<%= f.label "All day event?" %>
+  <%= f.check_box :allday %>
+	</br>
+	</br>
 
-  <div class="field">
-    <%= f.label :title %><br />
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
-    <%= f.label :allday %>
-    <%= f.check_box :allday %> <br />
-  </div>
-
-  <div class="field">
-    <%= f.label :start %><br />
-    <%= f.datetime_select :start, :default => defaultstarttime, :minute_step => @timeslot, :ampm => true  %>
-  </div>
-  <div class="field">
-    <%= f.label :end %><br />
-    <%= f.datetime_select :end, :default => defaultendtime, :minute_step => @timeslot, :ampm => true %>
-  </div>
-  
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+	<%= f.submit "Book my appointment", class: "btn btn-large btn-primary" %>
 <% end %>

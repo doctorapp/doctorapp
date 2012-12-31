@@ -17,7 +17,7 @@ class Appointment < ActiveRecord::Base
 	private
 
 		def start_datetime_cannot_after_end_datetime
-			if self[:end] < self[:start]
+			if self[:end] < self[:start] # why self[:end] not :end ? of course...
 				errors[:start] << "Start time can't be later than end time!"
 				return false
 			else
