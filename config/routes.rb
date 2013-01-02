@@ -1,5 +1,7 @@
 Doctorapp::Application.routes.draw do
 
+  get "password_resets/new"
+
 	resources :patients do
 		member do
 			get :favorite_doctors
@@ -11,7 +13,7 @@ Doctorapp::Application.routes.draw do
 	resources :admins,		only: [:show]
 	resources :sessions, 	only: [:new, :create, :destroy]
 	resources :favorite_doctors, only: [:create, :destroy]
-
+  resources :password_resets
 
 	resources :appointments do
 		member do

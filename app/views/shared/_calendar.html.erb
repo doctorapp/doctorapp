@@ -1,0 +1,147 @@
+<script type='text/javascript'>
+
+  $(document).ready(function() {
+  
+    var date = new Date();
+    var d = date.getDate();
+    var m = date.getMonth();
+    var y = date.getFullYear();
+    
+    var options = {
+      header: {
+        left: 'prev,next today',
+        center: 'prevYear,title,nextYear',
+        right: 'month,agendaWeek,agendaDay'
+      },
+
+      defaultView: 'agendaWeek',
+
+      slotMinutes: 30,
+      defaultEventMinutes: 60,
+      axisFormat: 'h:mm:tt',
+      firstHour: 8,
+      minTime: 0,
+      maxTime: 24,
+      
+      selectable: true,
+      selectHelper: true,
+
+      theme: false,
+      editable: true,
+      firstDay: 0,
+      weekends: true,
+      weekMode: 'fixed',
+      height: 650,
+      contentHeight: 600,
+      //aspectRatio: 2,
+      timeFormat: 'H:mm',
+      
+      columnFormat: {
+          month: 'ddd',    // Mon
+          week: 'ddd M/d', // Mon 9/7
+          day: 'dddd M/d'  // Monday 9/7
+      },
+
+      titleFormat: {
+         month: 'MMMM yyyy',                             // September 2009
+         week: "MMM d[ yyyy]{ '&#8212;'[ MMM] d yyyy}", // Sep 7 - 13 2009
+         day: 'dddd, MMM d, yyyy'                  // Tuesday, Sep 8, 2009
+      },
+
+      buttonText: {
+        //prev: '&lt;',
+        //next: '&gt;'
+        prev:     '&nbsp;&#9668;&nbsp;',  // left triangle
+        next:     '&nbsp;&#9658;&nbsp;',  // right triangle
+        prevYear: 'Prev year',//'&nbsp;&lt;&lt;&nbsp;', // <<
+        nextYear: 'Next year',//'&nbsp;&gt;&gt;&nbsp;', // >>
+        today:    'today',
+        month:    'month',
+        week:     'week',
+        day:      'day'
+      },
+
+
+      monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+ 'August', 'September', 'October', 'November', 'December'],
+
+      monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+ 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+
+       dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
+ 'Thursday', 'Friday', 'Saturday'],
+
+      dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+
+
+    select: function( startDate, endDate, allDay, jsEvent, view ) {
+        //alert("start: "+startDate+"; end: "+endDate + "; allDay: "+allDay);
+        //$(this).css('background-color', 'red');
+        createEvent(startDate, endDate, allDay);
+    },
+
+    unselect: function( view, jsEvent ) {
+        //$(this).css('background-color', 'white');
+    },
+
+    viewDisplay: function(view) {
+        //alert('The new title of the view is ' + view.title);
+    },
+
+     windowResize: function(view) {
+       // alert('The calendar has adjusted to a window resize');
+    },
+
+   dayClick: function(date, allDay, jsEvent, view) {
+
+        //if (allDay) {
+          //  alert('Clicked on the entire day: ' + date + "allDay: "+allDay);
+        //}else{
+          //  alert('Clicked on the slot: ' + date);
+        //}
+
+        createEvent(date, date, allDay);
+        // change the day's background color just for fun
+        $(this).css('background-color', 'red');
+
+    },
+
+    eventClick: function(calEvent, jsEvent, view) {
+      showEventDetails(calEvent);
+    },
+
+    eventAfterRender: function( event, element, view ) { },
+    /*eventRender: function(event, element) { 
+       element.qtip({
+            content: event.title,
+            width: auto,
+            height: auto
+        });
+
+       element.popover({
+            title: event.title,
+            placement: 'right',
+            content: + '<br />Start: ' + event.start + '<br />End: ' + event.end + '<br />Description: ' + event.description,
+        });
+     },*/
+
+
+    eventMouseover: function( event, jsEvent, view ) { 
+        //var date =$('#calendar').fullCalendar('getDate');
+        //var timeslot = 15; //$('#calendar').fullCalendar.; // opt['slotMinutes'];
+        //alert("Date: "+date);
+    },
+
+    eventMouseout: function( event, jsEvent, view ) { },
+
+    events: 'appointments.json'
+
+  };
+
+  $('#calendar').fullCalendar(options);
+ 
+ 
+
+});
+
+</script> 

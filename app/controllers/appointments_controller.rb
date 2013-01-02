@@ -65,6 +65,7 @@ class AppointmentsController < ApplicationController
     @appointment.patient_id= current_user.id
 		@appointment.start = DateTime.strptime(params[:appointment][:start], '%m/%d/%Y %H:%M')
 		@appointment.end = DateTime.strptime(params[:appointment][:end],'%m/%d/%Y %H:%M')
+
     respond_to do |format|
       if @appointment.save
         format.html { redirect_to root_url, notice: 'Appointment was successfully created.' }
