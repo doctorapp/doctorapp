@@ -1,9 +1,6 @@
 <% if signed_in? %>
-
-<%= render 'shared/calendar' %>
-
+	<%= render 'shared/calendar' %>
+	<div id='calendar'></div>
 <% else %>
-
-<%= render 'shared/rootpath_not_signed_in' %>
-
+	<%= render 'shared/rootpath_not_signed_in' %>
 <% end %>
