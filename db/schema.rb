@@ -11,13 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130102191630) do
+ActiveRecord::Schema.define(:version => 20130103080940) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "doctor_id"
     t.integer  "patient_id"
     t.string   "title"
-    t.boolean  "allday"
+    t.boolean  "allDay"
     t.datetime "start"
     t.datetime "end"
     t.string   "url"
@@ -30,9 +30,20 @@ ActiveRecord::Schema.define(:version => 20130102191630) do
   add_index "appointments", ["doctor_id"], :name => "index_appointments_on_doctor_id"
   add_index "appointments", ["patient_id"], :name => "index_appointments_on_patient_id"
 
+  create_table "calendar_settings", :force => true do |t|
+    t.integer  "doctor_id"
+    t.integer  "slotMinutes"
+    t.integer  "minTime"
+    t.integer  "maxTime"
+    t.integer  "firstHour"
+    t.integer  "defaultEventMinutes"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
   create_table "doctors_domains", :id => false, :force => true do |t|
     t.integer "doctor_id", :null => false
-    t.integer "domain_id"
+    t.integer "domain_id", :null => false
   end
 
   add_index "doctors_domains", ["doctor_id", "domain_id"], :name => "index_doctors_domains_on_doctor_id_and_domain_id", :unique => true
