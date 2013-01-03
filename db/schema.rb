@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130102191630) do
+ActiveRecord::Schema.define(:version => 20130103212504) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "doctor_id"
@@ -83,5 +83,16 @@ ActiveRecord::Schema.define(:version => 20130102191630) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
   add_index "users", ["type"], :name => "index_users_on_type"
+
+  create_table "vacations", :force => true do |t|
+    t.integer  "doctor_id"
+    t.date     "start"
+    t.date     "end"
+    t.string   "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "vacations", ["doctor_id"], :name => "index_vacations_on_doctor_id"
 
 end

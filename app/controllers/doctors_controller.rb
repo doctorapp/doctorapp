@@ -24,7 +24,7 @@ class DoctorsController < ApplicationController
 			flash[:success] = "Welcome to g-s-a-d!"
 			redirect_to @doctor
 		else
-			render 'new'
+			render :new
 		end
 	end
 
@@ -41,7 +41,7 @@ class DoctorsController < ApplicationController
 			flash[:success] = "Successfully updated profile!"
 			redirect_to @doctor
 		else
-			render 'edit'
+			render :edit
 		end
 	end
 

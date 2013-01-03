@@ -1,0 +1,18 @@
+<div class="row">
+	<div class="span6 offset3">
+		<%= form_for(@vacation) do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+
+ 			<%= f.label :description %>
+  		<%= f.text_field :description %>
+
+  		<%= f.label :start %>
+ 			<%= f.text_field :start %>
+	
+			<%= f.label :end %>
+ 			<%= f.text_field :end %> 
+
+			<%= f.submit "Add my vacation", class: "btn btn-large btn-primary" %>
+		<% end %>
+	</div>
+</div>
