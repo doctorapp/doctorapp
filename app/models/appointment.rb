@@ -1,5 +1,5 @@
 class Appointment < ActiveRecord::Base
-  attr_accessible :doctor_id, :patient_id, :title, :start, :end, :allday
+  attr_accessible :doctor_id, :patient_id, :title, :start, :end, :allDay
 
 	belongs_to :patient
 	belongs_to :doctor
@@ -9,6 +9,7 @@ class Appointment < ActiveRecord::Base
 	validates :start, presence: true
 	validates :end, presence: true
 	validates :doctor_id, presence: true
+	validates :patient_id, presence: true
 	
 	validate :start_datetime_cannot_after_end_datetime
 

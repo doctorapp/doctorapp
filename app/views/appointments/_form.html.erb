@@ -1,20 +1,41 @@
 <%= form_for(@appointment) do |f| %>
 	<%= render 'shared/error_messages', object: f.object %>
 
+
  	<%= f.label :title %>
-  <%= f.text_field :title %>
+    <%= f.text_field :title %>
 
-	<%= f.label "Choose your doctor" %>
-	<%= f.collection_select :doctor_id, current_user.doctors.all, :id, :name %>
+	<!--%= f.label "Choose your doctor" %-->
+	<!--%= f.collection_select :doctor_id, current_user.doctors.all, :id, :name % -->
 
-  <%= f.label :start %>
- 	<%= f.text_field :start %>
+	<% if ( current_user.type == 'Doctor') %>
+		<%= f.label :patient_id %>
+		<%= f.text_field :patient_id %>
+	<% end %>
+
+	<% if @startdate==nil %>
+       <% defaultstarttime = Time.now %>
+       <% defaultendtime = Time.now+1.hour %>
+    <% else %>
+      <% defaultstarttime = @startdate %>
+       <% if @startdate==@enddate %>
+          <% defaultendtime = @enddate+1.hour %>
+       <% else %>
+          <% defaultendtime = @enddate %>
+       <% end %>
+
+    <% end %>
+
+   
+    <%= f.label :start %>
+ 	<%= f.datetime_select :start, :minute_step => @timeslot, default: defaultstarttime %>
 	
-	<%= f.label :end %>
- 	<%= f.text_field :end %> 
 
-	<%= f.label "All day event?" %>
-  <%= f.check_box :allday %>
+	 
+	<%= f.label :end %>
+ 	<%= f.datetime_select :end, :minute_step => @timeslot, default: defaultendtime %> 
+ 	
+	
 	</br>
 	</br>
 

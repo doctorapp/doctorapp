@@ -38,6 +38,9 @@ class AppointmentsController < ApplicationController
   def new
     @appointment = current_user.appointments.new
 		@timeslot ||= 30	# should be populated by docotr settings
+    @appointment.allDay ||= false
+    @startdate = DateTime.parse(params[:startdate])
+    @enddate = DateTime.parse(params[:enddate])
 
     respond_to do |format|
       format.html #{render :locals => {:slotMinutes =>@slotMinutes} }# new.html.erb
@@ -62,9 +65,15 @@ class AppointmentsController < ApplicationController
   # POST /appointments.json
   def create
     @appointment = current_user.appointments.build(params[:appointment])
-    @appointment.patient_id= current_user.id
-		@appointment.start = DateTime.strptime(params[:appointment][:start], '%m/%d/%Y %H:%M')
-		@appointment.end = DateTime.strptime(params[:appointment][:end],'%m/%d/%Y %H:%M')
+    if ( current_user.type == 'Doctor')
+      @appointment.doctor_id= current_user.id
+      #@appointment.patient_id = users.find_by_email(@appointment.)
+    elsif  ( current_user.type == 'Patient')
+      @appointment.patient_id = current_user.id
+      @appointment.doctor_id = current_user.doctors.find(params[:id])
+    end
+		#@appointment.start = DateTime.strptime(params[:appointment][:start], '%m/%d/%Y %H:%M')
+		#@appointment.end = DateTime.strptime(params[:appointment][:end],'%m/%d/%Y %H:%M')
 
     respond_to do |format|
       if @appointment.save

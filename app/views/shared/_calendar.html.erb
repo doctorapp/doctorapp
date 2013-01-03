@@ -1,3 +1,13 @@
+<link rel='stylesheet' type='text/css' href='/stylesheets/fullcalendar.css' />
+<link rel='stylesheet' type='text/css' href='/stylesheets/fullcalendar.print.css' media='print' />
+<script type='text/javascript' src='/javascripts/jquery-1.5.min.js'></script>
+<script type='text/javascript' src='/javascripts/fullcalendar.js'></script>
+<script type='text/javascript' src='/javascripts/jquery-ui.min.js'></script>
+
+
+
+<% @setting = Doctor.find(current_user.id).calendar_setting %>
+
 <script type='text/javascript'>
 
   $(document).ready(function() {
@@ -6,7 +16,7 @@
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
-    
+    var w = date.getDay();
     var options = {
       header: {
         left: 'prev,next today',
@@ -15,24 +25,25 @@
       },
 
       defaultView: 'agendaWeek',
-
-      slotMinutes: 30,
-      defaultEventMinutes: 60,
+      allDaySlot: false,
       axisFormat: 'h:mm:tt',
-      firstHour: 8,
-      minTime: 0,
-      maxTime: 24,
+
+      slotMinutes: <%= @setting.slotMinutes %>,
+      defaultEventMinutes: <%= @setting.defaultEventMinutes %>,
+      firstHour: <%= @setting.firstHour %>,
+      minTime: <%= @setting.minTime %>,
+      maxTime: <%= @setting.maxTime %>,
       
       selectable: true,
       selectHelper: true,
 
       theme: false,
       editable: true,
-      firstDay: 0,
+      firstDay: w,
       weekends: true,
       weekMode: 'fixed',
-      height: 650,
-      contentHeight: 600,
+      height: 750,
+      contentHeight: 700,
       //aspectRatio: 2,
       timeFormat: 'H:mm',
       
@@ -102,7 +113,7 @@
 
         createEvent(date, date, allDay);
         // change the day's background color just for fun
-        $(this).css('background-color', 'red');
+        //$(this).css('background-color', 'red');
 
     },
 
