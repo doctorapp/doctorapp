@@ -26,8 +26,10 @@ $(function() {
 		slideraccessargs: { touchonly: false }
 	});
 
-	$('#vacation_start').datepicker({ dateFormat: 'mm-dd-yy' });
-	$('#vacation_end').datepicker({ dateFormat: 'mm-dd-yy' });
+	
+	// vacation date picker
+	$('#vacation_start').datepicker({ dateFormat: 'mm/dd/yy' });
+	$('#vacation_end').datepicker({ dateFormat: 'mm/dd/yy' });
 
 });
 

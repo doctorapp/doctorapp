@@ -17,6 +17,8 @@ class VacationsController < ApplicationController
 
 	def create
 		@vacation = current_user.vacations.build(params[:vacation])
+		@vacation.start = DateTime.strptime(params[:vacation][:start], '%m/%d/%Y')
+		@vacation.end = DateTime.strptime(params[:vacation][:end], '%m/%d/%Y')
 		@vacation.doctor_id = current_user.id
 		if @vacation.save
 			flash[:success] = "Successfully added vacation"
