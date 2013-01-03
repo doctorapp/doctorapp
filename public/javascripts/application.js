@@ -1,3 +1,38 @@
+// This is a manifest file that'll be compiled into application.js, which will include all the files
+// listed below.
+//
+// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
+// or vendor/assets/javascripts of plugins, if any, can be referenced here using a relative path.
+//
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// the compiled file.
+//
+// WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
+// GO AFTER THE REQUIRES BELOW.
+//
+//= require jquery_ujs
+//= require bootstrap
+//= require_tree .
+
+$(function() {
+
+	$('#appointment_start').datetimepicker({
+		addslideraccess: true,
+		slideraccessargs: { touchonly: false }
+	});
+	
+	$('#appointment_end').datetimepicker({
+		addslideraccess: true,
+		slideraccessargs: { touchonly: false }
+	});
+
+	
+	// vacation date picker
+	$('#vacation_start').datepicker({ dateFormat: 'mm/dd/yy' });
+	$('#vacation_end').datepicker({ dateFormat: 'mm/dd/yy' });
+
+});
+
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
@@ -23,10 +58,10 @@ function showEventDetails(event){
     //alert("Show events with Id"+event.id );
     title = event.title;
     start = event.start;
-    userId = event.user_id;
+    patientId = event.patient_id;
     doctorId = event.doctor_id;
 
-    $('#event_desc').html("Start: "+start+"</br> userId: "+userId+"</br> doctorId: "+doctorId);
+    $('#event_desc').html("Start time: "+start+"</br> patientId: "+patientId+"</br> doctorId: "+doctorId);
     $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ")'>Edit</a>");
     /*if (event.recurring) {
         title = event.title + "(Recurring)";
@@ -60,13 +95,13 @@ function showEventDetails(event){
 
 function createEvent(startdate,enddate,allDay){
     slotMinutes = $.fullCalendar.passedOptions['slotMinutes'];
-    alert("slotMinutes");
-    
+
+
     jQuery.ajax({
         data: 'slotminutes='+slotMinutes+ '&startdate='+startdate+ '&enddate='+enddate+ '&allDay='+allDay,
         dataType: 'script',
         type: 'get',
-        success: function(data) {},
+        success: function(data) {alert("success created") },
         error: function(x,t,c) {
             alert("error! "+x+t+c);          
         },
@@ -77,7 +112,7 @@ function createEvent(startdate,enddate,allDay){
 
 function editEvent(event_id){
     slotMinutes = $.fullCalendar.passedOptions['slotMinutes'];
-    alert("slotMinutes: "+slotMinutes);
+    
     jQuery.ajax({
         data: 'id=' + event_id+'&slotminutes='+slotMinutes,
         dataType: 'script',
@@ -127,8 +162,5 @@ function showPeriodAndFrequency(value){
         default:
             $('#frequency').hide();
     }
-    
-    
-    
     
 }
