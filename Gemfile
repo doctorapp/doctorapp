@@ -6,7 +6,11 @@ gem 'bcrypt-ruby', '3.0.1'
 gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'
+<<<<<<< HEAD
 gem 'sqlite3'
+=======
+gem 'sqlite3', '1.3.5'
+>>>>>>> 1191ca3c380d54cdee90bd2cad3c7c0b08d23f98
 
 group :development, :test do
   gem 'rspec-rails', '2.11.0'

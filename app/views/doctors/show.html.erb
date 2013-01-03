@@ -8,11 +8,12 @@
 			</h1>
 		</section>
 		<section>
-			<!-- render 'shared/stats' -->
+			<%= render 'favorite_form' if ( signed_in? && current_user.type == 'Patient') %>
 		</section>
 	</aside>
 	<div class="span8">
-		<%= render 'favorite_form' if ( signed_in? && current_user.type == 'Patient') %>
+		<%= render 'shared/calendar' %>
+		<div id='calendar'></div>
 	</div>
 	
 	<%= render 'shared/calendar' %>

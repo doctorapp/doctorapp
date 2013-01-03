@@ -4,6 +4,9 @@ class DoctorsController < ApplicationController
 #	before_filter :correct_user, only: [:edit, :update]
 	before_filter :admin_user, only: [:destroy]
 	before_filter :signed_in_sign_up, only:[:new, :create]
+	before_filter :signed_in_user, only: [:edit, :upadte, :show, :index] 
+	before_filter :correct_user, only: [:edit, :update]
+
 
 
 	def index
@@ -21,7 +24,7 @@ class DoctorsController < ApplicationController
 			flash[:success] = "Welcome to g-s-a-d!"
 			redirect_to @doctor
 		else
-			render 'new'
+			render :new
 		end
 	end
 
@@ -38,7 +41,7 @@ class DoctorsController < ApplicationController
 			flash[:success] = "Successfully updated profile!"
 			redirect_to @doctor
 		else
-			render 'edit'
+			render :edit
 		end
 	end
 

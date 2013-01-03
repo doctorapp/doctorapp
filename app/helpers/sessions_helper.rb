@@ -33,6 +33,13 @@ module SessionsHelper
 		current_user.type == 'Doctor'
 	end
 
+	def doctor_user
+		unless doctor?
+			redirect_to root_url, notice: "Not a doctor user."
+		end
+	end
+
+
   def current_user=(user)
     @current_user = user
   end
