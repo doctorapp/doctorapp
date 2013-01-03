@@ -5208,5 +5208,3 @@ function HorizontalPositionCache(getElement) {
 }
 
 })(jQuery);
-
-

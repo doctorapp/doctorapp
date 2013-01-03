@@ -81,7 +81,10 @@ describe User do
   end
 
   describe "when password confirmation is nil" do
-    before { @user.password_confirmation = nil }
+    before do
+			@user.password = "password"
+			@user.password_confirmation = nil
+		end
     it { should_not be_valid }
   end 
 
