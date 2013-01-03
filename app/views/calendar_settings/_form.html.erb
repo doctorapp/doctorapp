@@ -1,0 +1,38 @@
+<%= form_for(@calendar_setting) do |f| %>
+  <% if @calendar_setting.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@calendar_setting.errors.count, "error") %> prohibited this calendar_setting from being saved:</h2>
+
+      <ul>
+      <% @calendar_setting.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  
+  <div class="field">
+    <%= f.label :slotMinutes %><br />
+    <%= f.number_field :slotMinutes, default: 30, :step => 5 %>
+  </div>
+  <div class="field">
+    <%= f.label :minTime %><br />
+    <%= f.number_field :minTime, defalut: 8 %>
+  </div>
+  <div class="field">
+    <%= f.label :maxTime %><br />
+    <%= f.number_field :maxTime, default: 18%>
+  </div>
+  <div class="field">
+    <%= f.label :firstHour %><br />
+    <%= f.number_field :firstHour, default: 8 %>
+  </div>
+  <div class="field">
+    <%= f.label :defaultEventMinutes %><br />
+    <%= f.number_field :defaultEventMinutes, default: 60 %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
