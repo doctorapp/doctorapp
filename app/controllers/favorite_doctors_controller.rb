@@ -1,5 +1,8 @@
 class FavoriteDoctorsController < ApplicationController
 	before_filter :signed_in_user
+	before_filter :signed_in_user, only: [:edit, :upadte, :show, :index] 
+	before_filter :correct_user, only: [:edit, :update]
+
 
 	respond_to :html, :js
 	def create

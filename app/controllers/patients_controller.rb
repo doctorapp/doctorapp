@@ -2,6 +2,9 @@ class PatientsController < ApplicationController
 
 	before_filter :admin_user, only: [:destroy]
 	before_filter :signed_in_sign_up, only:[:new, :create]
+	before_filter :signed_in_user, only: [:edit, :upadte, :show, :index] 
+	before_filter :correct_user, only: [:edit, :update]
+
 
 
 	def index
@@ -15,8 +18,9 @@ class PatientsController < ApplicationController
 	def create
 		@patient = Patient.new(params[:patient])
 		if @patient.save
+			UserMailer.welcome_email(@patient).deliver
 			sign_in @patient
-			flash[:success] = "Welcome to the g-s-a-d!"
+			flash[:success] = "Welcome to GSAD!"
 			redirect_to @patient
 		else
 			render 'new'
