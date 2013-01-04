@@ -23,10 +23,10 @@
        <% else %>
           <% defaultendtime = @enddate %>
        <% end %>
-
     <% end %>
 
-   
+	   
+
     <%= f.label :start %>
  	<%= f.datetime_select :start, :minute_step => @timeslot, default: defaultstarttime %>
 	

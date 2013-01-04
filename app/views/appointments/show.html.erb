@@ -11,8 +11,13 @@
 </p>
 
 <p>
-  <b>Allday:</b>
-  <%= @appointment.allday %>
+  <b>Doctor:</b>
+  <%= Doctor.find(@appointment.doctor_id).name %>
+</p>
+
+<p>
+  <b>Patient:</b>
+  <%= Patient.find(@appointment.patient_id).name %>
 </p>
 
 <p>
@@ -25,20 +30,7 @@
   <%= @appointment.end %>
 </p>
 
-<p>
-  <b>Url:</b>
-  <%= @appointment.url %>
-</p>
 
-<p>
-  <b>Editable:</b>
-  <%= @appointment.editable %>
-</p>
-
-<p>
-  <b>Source:</b>
-  <%= @appointment.source %>
-</p>
 
 
 <%= link_to 'Edit', edit_appointment_path(@appointment) , {:class => 'linkedTo'} %> |

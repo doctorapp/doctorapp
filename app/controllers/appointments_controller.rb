@@ -42,6 +42,15 @@ class AppointmentsController < ApplicationController
     @startdate = DateTime.parse(params[:startdate])
     @enddate = DateTime.parse(params[:enddate])
 
+
+    if ( current_user.type == 'Doctor')
+      @appointment.doctor_id= current_user.id
+      #@appointment.patient_id = users.find_by_email(@appointment.)
+    elsif ( current_user.type == 'Patient')
+      @appointment.patient_id = current_user.id
+      @appointment.doctor_id = params[:id]
+    end
+
     respond_to do |format|
       format.html #{render :locals => {:slotMinutes =>@slotMinutes} }# new.html.erb
       format.json { render json: @appointment }
@@ -65,13 +74,7 @@ class AppointmentsController < ApplicationController
   # POST /appointments.json
   def create
     @appointment = current_user.appointments.build(params[:appointment])
-    if ( current_user.type == 'Doctor')
-      @appointment.doctor_id= current_user.id
-      #@appointment.patient_id = users.find_by_email(@appointment.)
-    elsif  ( current_user.type == 'Patient')
-      @appointment.patient_id = current_user.id
-      @appointment.doctor_id = current_user.doctors.find(params[:id])
-    end
+    
 		#@appointment.start = DateTime.strptime(params[:appointment][:start], '%m/%d/%Y %H:%M')
 		#@appointment.end = DateTime.strptime(params[:appointment][:end],'%m/%d/%Y %H:%M')
 

@@ -4,11 +4,14 @@
 <script type='text/javascript' src='/javascripts/fullcalendar.js'></script>
 <script type='text/javascript' src='/javascripts/jquery-ui.min.js'></script>
 
+<% if (doctor?) %>
+  <% @doctor = Doctor.find(current_user.id) %>
+<% else %>
+  <% @doctor = Doctor.find(params[:id]) %>
+<% end %>
 
 
-<% @setting = Doctor.find(current_user.id).calendar_setting %>
-<script type='text/javascript' src='/javascripts/jquery-1.5.min.js'></script>
-<script type='text/javascript' src='/javascripts/fullcalendar.js'></script>
+<% @setting = @doctor.calendar_setting %>
 
 
 <script type='text/javascript'>
@@ -20,10 +23,11 @@
     var m = date.getMonth();
     var y = date.getFullYear();
     var w = date.getDay();
+
     var options = {
       header: {
         left: 'prev,next today',
-        center: 'prevYear,title,nextYear',
+        center: 'title', //'prevYear,title,nextYear',
         right: 'month,agendaWeek,agendaDay'
       },
 
@@ -91,6 +95,7 @@
     select: function( startDate, endDate, allDay, jsEvent, view ) {
         //alert("start: "+startDate+"; end: "+endDate + "; allDay: "+allDay);
         //$(this).css('background-color', 'red');
+        //alert('doctor/' + <%= @doctor.id %> + '/appointments.json');
         createEvent(startDate, endDate, allDay);
     },
 
@@ -107,12 +112,13 @@
     },
 
    dayClick: function(date, allDay, jsEvent, view) {
-
+        
         //if (allDay) {
           //  alert('Clicked on the entire day: ' + date + "allDay: "+allDay);
         //}else{
           //  alert('Clicked on the slot: ' + date);
         //}
+        //alert('doctor/' + <%= @doctor.id %> + '/appointments.json');
 
         createEvent(date, date, allDay);
         // change the day's background color just for fun
@@ -148,7 +154,7 @@
 
     eventMouseout: function( event, jsEvent, view ) { },
 
-    events: 'appointments.json'
+    events: '/doctors/' + <%= @doctor.id %> + '/appointments.json'
 
   };
 

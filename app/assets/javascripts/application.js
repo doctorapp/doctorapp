@@ -96,12 +96,12 @@ function showEventDetails(event){
 function createEvent(startdate,enddate,allDay){
     slotMinutes = $.fullCalendar.passedOptions['slotMinutes'];
 
-
+    
     jQuery.ajax({
         data: 'slotminutes='+slotMinutes+ '&startdate='+startdate+ '&enddate='+enddate+ '&allDay='+allDay,
         dataType: 'script',
         type: 'get',
-        success: function(data) {alert("success created") },
+        success: function(data) { },
         error: function(x,t,c) {
             alert("error! "+x+t+c);          
         },

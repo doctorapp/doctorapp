@@ -11,6 +11,14 @@ Doctorapp::Application.routes.draw do
 		end
 	end
 
+
+  resources :doctors do
+    member do
+      get :appointments
+    end
+  end
+  
+
 	resources :doctors
 
 	resources :admins,		only: [:show]

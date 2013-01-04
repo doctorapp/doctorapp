@@ -28,6 +28,16 @@ class DoctorsController < ApplicationController
 		end
 	end
 
+	def appointments
+		@doctor = Doctor.find(params[:id])
+		@appointments = @doctor.appointments
+
+		respond_to do |format|
+      		format.html # index.html.erb
+      		format.json { render json: @appointments }
+    	end
+	end
+
 	def edit
 		@doctor = Doctor.find(params[:id])
 	end

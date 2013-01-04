@@ -11,13 +11,12 @@
 			<%= render 'favorite_form' if ( signed_in? && current_user.type == 'Patient') %>
 		</section>
 	</aside>
+
 	<div class="span8">
 		<%= render 'shared/calendar' %>
 		<div id='calendar'></div>
 	</div>
 	
-	
-
 	<div id = "desc_dialog" title="Appointment Details" >
  		<div id = "event_desc">
 		</div>
@@ -35,4 +34,5 @@
   		<div id = "create_event">
   		</div>
 	</div>
+
 </div>
