@@ -4,7 +4,7 @@ class VacationsController < ApplicationController
 	before_filter :doctor_user, only: [:new, :create, :edit, :destory]
 
 	def index
-		@vacations = current_user.vacations.all
+		@vacations = current_user.vacations.where('end >= ?', Time.now).paginate(page: params[:page])
 	end
 
 	def show
@@ -33,6 +33,7 @@ class VacationsController < ApplicationController
 		@vacation = current_user.vacations.find(params[:id])
 		@vacation.destroy
 		flash[:success] = "Successfully deleted vacation"
+		redirect_to vacations_path
 	end
 
 end

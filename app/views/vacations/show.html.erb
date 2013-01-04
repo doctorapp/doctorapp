@@ -1,0 +1,13 @@
+<% provide(:title, "Vacation") %>
+<div class="row">
+	<div class="span6 offset3">
+		<section>
+			<h1>Vacation</h1>
+			Start: <%= @vacation.start %></br>
+			End: <%= @vacation.end %></br>
+		</section>
+		<% if signed_in? %>
+			<%= link_to 'Delete', @vacation, method: :delete, data: {confirm: "You sure?"} %>  <!-- DELETE request is faked with javascript -->
+		<% end %>
+	</div>
+</div>
