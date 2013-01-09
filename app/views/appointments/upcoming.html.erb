@@ -7,7 +7,7 @@
     <li>
        <%= link_to appointment.title, appointment %>
        
-       <%= link_to 'Edit',  edit_appointment_path(appointment) , {:class => 'linkedTo'} %>
+       <%= link_to 'Edit',  edit_patient_appointment_path(Patient.find(current_user.id), appointment) , {:class => 'linkedTo'} %>
 
        <%= link_to 'Cancel', appointment,   method: :delete,  
                                      data: { confirm: "You sure?" },

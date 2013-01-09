@@ -5,17 +5,20 @@ class AppointmentsController < ApplicationController
   before_filter :signed_in_user
   #before_filter :correct_user
 
-  def upcoming
-    @appointments = current_user.appointments.find(:all, :order => 'start DESC', :conditions => ['start >= ?',Time.now] ) 
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @appointments }
-    end
-  end
+  
 
   def index
-    @appointments = current_user.appointments.all
+
+    if ( current_user.type == 'Doctor')
+      doctor_id= current_user.id
+      #@appointment.patient_id = users.find_by_email(@appointment.)
+    elsif ( current_user.type == 'Patient')
+      doctor_id = params[:doctor_id]
+    end
+
+    @doctor = Doctor.find(doctor_id)
+
+    @appointments = @doctor.appointments.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -26,7 +29,8 @@ class AppointmentsController < ApplicationController
   # GET /appointments/1
   # GET /appointments/1.json
   def show
-    @appointment = current_user.appointments.find(params[:id])
+    if( @appointment = current_user.appointments.find(params[:id]) )
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -39,8 +43,13 @@ class AppointmentsController < ApplicationController
     @appointment = current_user.appointments.new
 		@timeslot ||= 30	# should be populated by docotr settings
     @appointment.allDay ||= false
-    @startdate = DateTime.parse(params[:startdate])
-    @enddate = DateTime.parse(params[:enddate])
+
+    if(params[:startdate])
+      @startdate = DateTime.parse(params[:startdate])
+    end
+    if(params[:enddate])
+      @enddate = DateTime.parse(params[:enddate])
+    end
 
 
     if ( current_user.type == 'Doctor')
@@ -48,8 +57,11 @@ class AppointmentsController < ApplicationController
       #@appointment.patient_id = users.find_by_email(@appointment.)
     elsif ( current_user.type == 'Patient')
       @appointment.patient_id = current_user.id
-      @appointment.doctor_id = params[:id]
+      @appointment.doctor_id = params[:doctor_id]
     end
+  
+    @doctor = Doctor.find(@appointment.doctor_id)
+    @patient = Patient.find(@appointment.patient_id)
 
     respond_to do |format|
       format.html #{render :locals => {:slotMinutes =>@slotMinutes} }# new.html.erb
@@ -61,6 +73,8 @@ class AppointmentsController < ApplicationController
   # GET /appointments/1/edit
   def edit
     @appointment = current_user.appointments.find(params[:id])
+    @doctor = Doctor.find(@appointment.doctor_id)
+    @patient = Patient.find(@appointment.patient_id)
     @timeslot = params[:slotminutes].to_f
 
     respond_to do |format|
@@ -74,18 +88,26 @@ class AppointmentsController < ApplicationController
   # POST /appointments.json
   def create
     @appointment = current_user.appointments.build(params[:appointment])
-    
 		#@appointment.start = DateTime.strptime(params[:appointment][:start], '%m/%d/%Y %H:%M')
 		#@appointment.end = DateTime.strptime(params[:appointment][:end],'%m/%d/%Y %H:%M')
+    if ( current_user.type == 'Doctor')
+      @appointment.doctor_id= current_user.id
+      #@appointment.patient_id = users.find_by_email(@appointment.)
+    elsif ( current_user.type == 'Patient')
+      @appointment.patient_id = current_user.id
+      @appointment.doctor_id = params[:doctor_id]
+    end
+
+    @doctor = Doctor.find(@appointment.doctor_id)
 
     respond_to do |format|
       if @appointment.save
-        format.html { redirect_to root_url, notice: 'Appointment was successfully created.' }
+        format.html { redirect_to @doctor, notice: 'Appointment was successfully created.' }
         format.json { render json: @appointment, status: :created, location: @appointment }
         format.js { render :layout => false }
       else
 				flash.now[:error] =  "Cannot create appointment. pid: #{@appointment.patient_id}. did: #{@appointment.doctor_id}. start: #{@appointment.start}. end: #{@appointment.end}. error: #{@appointment.errors.first}" 
-      	format.html { render 'static_pages/home' }
+      	format.html { redirect_to @doctor }
 				format.json { render json: @appointment.errors, status: :unpcoressable_entity }
 				format.js { render :layout => false }
 			end

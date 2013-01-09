@@ -1,6 +1,7 @@
 <% provide(:title, "New appointment") %>
 <h1>New appointment</h1>
 
+
 <%= render 'form' %>
 
-<%= link_to 'See all appointments', appointments_path %>
+<%= link_to 'See all appointments', [@doctor, @appointment]  %>

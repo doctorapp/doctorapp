@@ -61,7 +61,7 @@ function showEventDetails(event){
     patientId = event.patient_id;
     doctorId = event.doctor_id;
 
-    $('#event_desc').html("Start time: "+start+"</br> patientId: "+patientId+"</br> doctorId: "+doctorId);
+    $('#event_desc').html("Start time: "+start+"</br> patient: <%= User.find("+patientId+").name %>  </br> doctorId: "+doctorId);
     $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ")'>Edit</a>");
     /*if (event.recurring) {
         title = event.title + "(Recurring)";
@@ -96,7 +96,7 @@ function showEventDetails(event){
 function createEvent(startdate,enddate,allDay){
     slotMinutes = $.fullCalendar.passedOptions['slotMinutes'];
 
-    
+
     jQuery.ajax({
         data: 'slotminutes='+slotMinutes+ '&startdate='+startdate+ '&enddate='+enddate+ '&allDay='+allDay,
         dataType: 'script',
@@ -105,7 +105,7 @@ function createEvent(startdate,enddate,allDay){
         error: function(x,t,c) {
             alert("error! "+x+t+c);          
         },
-        url: "/appointments/new"
+        url: window.location.pathname+"/appointments/new"
         //url: "/appointments/edit"
     });
 }
@@ -113,6 +113,10 @@ function createEvent(startdate,enddate,allDay){
 function editEvent(event_id){
     slotMinutes = $.fullCalendar.passedOptions['slotMinutes'];
     
+    path = window.location.pathname;
+
+    //alert(path+ "  "+event_id);
+
     jQuery.ajax({
         data: 'id=' + event_id+'&slotminutes='+slotMinutes,
         dataType: 'script',
@@ -121,7 +125,7 @@ function editEvent(event_id){
         error: function(x,t,c) {
             alert("error! "+x+t+c);          
         },
-        url: "/appointments/"+event_id+"/edit"
+        url: window.location.pathname+"/appointments/"+event_id+"/edit"
         //url: "/appointments/edit"
     });
 }
@@ -134,7 +138,7 @@ function deleteEvent(event_id, delete_all){
             data: 'id=' + event_id + '&delete_all='+delete_all,
             dataType: 'script',
             type: 'delete',
-            url: "/appointments/"+event_id
+            url: window.location.pathname+"/appointments/"+event_id
         });
     }
 }

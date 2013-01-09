@@ -7,19 +7,21 @@ Doctorapp::Application.routes.draw do
 
 	resources :patients do
 		member do
-			get :favorite_doctors
+			get  :upcoming_appointments, :past_appointments
 		end
 	end
 
 
   resources :doctors do
     member do
-      get :appointments
+      get :doctor_appointments
     end
+    resources :appointments 
   end
-  
 
-	resources :doctors
+
+
+	#resources :doctors
 
 	resources :admins,		only: [:show]
 	resources :sessions, 	only: [:new, :create, :destroy]
@@ -29,11 +31,7 @@ Doctorapp::Application.routes.draw do
 
   resources :calendar_settings
 
-	resources :appointments do
-		member do
-			get :upcoming
-		end
-	end
+	
 
 
 	root to: 'static_pages#home'

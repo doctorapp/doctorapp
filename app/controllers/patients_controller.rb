@@ -11,9 +11,9 @@ class PatientsController < ApplicationController
 		@patients = Patient.paginate(page: params[:page])
 	end
 
-  def new
+    def new
 		@patient = Patient.new
-  end
+    end
 
 	def create
 		@patient = Patient.new(params[:patient])
@@ -45,6 +45,10 @@ class PatientsController < ApplicationController
 	def show
 		@patient = Patient.find(params[:id])
 		@doctors = @patient.doctors.paginate(page: params[:page])
+		#@upcoming_appointments = @patient.appointments.find(:all, :order => 'start DESC', :conditions => ['start >= ?',Time.now] ) 
+
+		@upcoming_appointments = @patient.appointments.paginate(page: params[:page],:per_page => 3, :order => 'start DESC', :conditions => ['start >= ?',Time.now] ) 
+		@past_appointments = @patient.appointments.paginate(page: params[:page], :per_page => 3, :order => 'start DESC', :conditions => ['start < ?',Time.now] )
 	end
 
 	def destroy
@@ -53,11 +57,31 @@ class PatientsController < ApplicationController
 		redirect_to patients_path
 	end
 
-	def favorite_doctors
-		@title = "Favorite doctors"
-		@patient = Patient.find(params[:id])
-		@doctors = @patient.doctors.paginate(page: params[:page])
-		render 'show'
-	end
+	#def favorite_doctors
+	#	@title = "Favorite doctors"
+	#	@patient = Patient.find(params[:id])
+	#	@doctors = @patient.doctors.paginate(page: params[:page])
+	#	render 'show'
+	#end
+
+	def upcoming_appointments
+   		@appointments = current_user.appointments.find(:all, :order => 'start DESC', :conditions => ['start >= ?',Time.now] ) 
+    	
+    	respond_to do |format|
+      		format.html # index.html.erb
+      		format.json { render json: @appointments }
+  		end
+  		render 'appointments#index'
+ 	 end
+
+ 	 def past_appointments
+    	@appointments = current_user.appointments.find(:all, :order => 'start DESC', :conditions => ['start < ?',Time.now] ) 
+
+    	respond_to do |format|
+    	    format.html # index.html.erb
+    	    format.json { render json: @appointments }
+    	end
+ 	 end
+
 
 end

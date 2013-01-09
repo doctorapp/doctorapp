@@ -16,14 +16,56 @@
         </div>
       <% end %>
     </section>
-  </aside>
-  <div class="span8">
-    <h3><%= @title %></h3>
+
+
+    <section>
+      <div class="span8">
+    <h3><%= 'Favorite Doctors' %></h3>
     <% if @doctors.any? %>
       <ul class="users">
+
         <%= render @doctors %>
       </ul>
       <%= will_paginate @doctors %>
     <% end %>
   </div>
+      
+    </section>
+
+
+  </aside>
+  <aside class="span4">
+  <div class="span8">
+       <h4><%= 'Upcoming Appointments' %></h4>
+       <% if @upcoming_appointments.any? %>
+          <ul class="appointments">
+          <% @upcoming_appointments.each do |appointment| %>
+            Title: <%= appointment.title %> </br>
+            Doctor: <%= Doctor.find(appointment.doctor_id).name %> </br>
+            Start: <%= appointment.start.to_s %> </br>
+            End: <%=  appointment.end.to_s %> </br>
+          </br>
+          <% end %>
+          </ul>      
+          <%= will_paginate @upcoming_appointments,:param_name => 'upcoming_page' %>
+      <% end %>  
+   </div>
+   </aside>
+   <aside class="span4">
+   <div class="span8">
+       <h4><%= 'Past Appointments' %></h4>
+       <% if @past_appointments.any? %>
+          <ul class="appointments">
+          <% @past_appointments.each do |appointment| %>
+            <%= 'Title: ' + appointment.title %> </br>
+            <%= 'Doctor: ' + Doctor.find(appointment.doctor_id).name %> </br>
+            <%= 'Start: ' + appointment.start.to_s %> </br>
+            <%= 'end: ' + appointment.end.to_s %> </br>
+          </br>
+          <% end %>
+          </ul>      
+          <%= will_paginate @past_appointments,:param_name => 'past_page'  %>
+       <% end %>
+  </div>
+  </aside>
 </div>

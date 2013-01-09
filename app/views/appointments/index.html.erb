@@ -3,11 +3,11 @@
 
 
 <ul class="appointments">
-  <% @appointments.each do |appointment| %>
+  <% @doctor.appointments.each do |appointment| %>
     <li>
-       <%= link_to appointment.title, appointment %>
+       <%= link_to appointment.title, doctor_appointment_path(@doctor, appointment) %>
        
-       <%= link_to 'Edit',  edit_appointment_path(appointment) , {:class => 'linkedTo'} %>
+       <%= link_to 'Edit',  edit_doctor_appointment_path(@dcotor,appointment) , {:class => 'linkedTo'} %>
 
        <%= link_to 'Delete', appointment,   method: :delete,  
                                      data: { confirm: "You sure?" },
@@ -19,6 +19,5 @@
 </ul>
 
 
-
-<%= link_to 'New Appointment', new_appointment_path, class: "btn btn-large btn-primary"  %>
+<%= link_to 'New Appointment', new_doctor_appointment_path, class: "btn btn-large btn-primary"  %>
 <%= link_to "Back to Home", root_url,  class: "btn btn-large btn-primary" %>
