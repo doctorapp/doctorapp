@@ -16,5 +16,15 @@ describe User do
 	it { should respond_to(:password_digest) }
 	it { should respond_to(:active) }
 	its(:type) { should == "Doctor" }  # auto initialized to be "Doctor" type
+	it { should respond_to(:work_days) }
+
+	describe "access work_days" do
+
+		before { @doctor.work_days.monday = true }
+		
+		it { should be_valid}
+
+	end
+
 
 end
