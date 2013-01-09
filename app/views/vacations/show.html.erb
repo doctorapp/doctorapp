@@ -7,7 +7,8 @@
 			End: <%= @vacation.end %></br>
 		</section>
 		<% if signed_in? %>
-			<%= link_to 'Delete', @vacation, method: :delete, data: {confirm: "You sure?"} %>  <!-- DELETE request is faked with javascript -->
+		    <% @doctor = Doctor.find(@vacation.doctor_id) %>
+			<%= link_to 'Delete', doctor_vacation_path(@doctor,@vacation), method: :delete, data: {confirm: "You sure?"} %>  <!-- DELETE request is faked with javascript -->
 		<% end %>
 	</div>
 </div>

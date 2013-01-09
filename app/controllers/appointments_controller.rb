@@ -5,7 +5,7 @@ class AppointmentsController < ApplicationController
   before_filter :signed_in_user
   #before_filter :correct_user
 
-  
+
 
   def index
 
@@ -61,7 +61,7 @@ class AppointmentsController < ApplicationController
     end
   
     @doctor = Doctor.find(@appointment.doctor_id)
-    @patient = Patient.find(@appointment.patient_id)
+    
 
     respond_to do |format|
       format.html #{render :locals => {:slotMinutes =>@slotMinutes} }# new.html.erb
@@ -118,10 +118,11 @@ class AppointmentsController < ApplicationController
   # PUT /appointments/1.json
   def update
     @appointment = current_user.appointments.find(params[:id])
+    @doctor = Doctor.find(@appointment.doctor_id)
 
     respond_to do |format|
       if @appointment.update_attributes(params[:appointment])
-        format.html { redirect_to root_url, notice: 'Appointment was successfully updated.' }
+        format.html { redirect_to @doctor, notice: 'Appointment was successfully updated.' }
         format.json { head :no_content }
       else
         flash.now[:error] = "Could not edit appointment"
@@ -136,10 +137,10 @@ class AppointmentsController < ApplicationController
   def destroy
     # @appointment.destroy
     @appointment = current_user.appointments.find(params[:id])
+    @doctor = Doctor.find(@appointment.doctor_id)
     @appointment.destroy
-
     respond_to do |format|
-      format.html { redirect_to root_url }
+      format.html { redirect_to @doctor,    notice:  " Appointment was successfully canceled."}
       format.js
     end
   end
