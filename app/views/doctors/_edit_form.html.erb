@@ -29,6 +29,24 @@
 		<% end %>
  	</div>
 
+	<%= f.label "Work days" %>
+	<div class='tickbox'>
+		<%= check_box_tag :monday, 1, @doctor.work_days.monday %>
+		<%= "Monday" %></br>
+		<%= check_box_tag :tuesday, 1, @doctor.work_days.tuesday %>
+		<%= "Tuesday" %></br>	
+		<%= check_box_tag :wednesday, 1, @doctor.work_days.wednesday%>
+		<%= "Wednesday" %></br>	
+		<%= check_box_tag :thursday, 1, @doctor.work_days.thursday %>
+		<%= "Thursday" %></br>	
+		<%= check_box_tag :friday, 1, @doctor.work_days.friday%>
+		<%= "Friday" %></br>	
+		<%= check_box_tag :saturday, 1, @doctor.work_days.saturday %>
+		<%= "Saturday" %></br>	
+		<%= check_box_tag :sunday, 1, @doctor.work_days.sunday %>
+		<%= "Sunday" %></br>	
+	</div>
+
   <%= f.submit conf_button, class: "btn btn-large btn-primary" %>
 
 <% end %>

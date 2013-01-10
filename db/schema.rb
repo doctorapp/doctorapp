@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130103212504) do
+ActiveRecord::Schema.define(:version => 20130104024443) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "doctor_id"
@@ -40,6 +40,21 @@ ActiveRecord::Schema.define(:version => 20130103212504) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end
+
+  create_table "doctor_work_days", :force => true do |t|
+    t.integer  "doctor_id"
+    t.boolean  "monday"
+    t.boolean  "tuesday"
+    t.boolean  "wednesday"
+    t.boolean  "thursday"
+    t.boolean  "friday"
+    t.boolean  "saturday"
+    t.boolean  "sunday"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "doctor_work_days", ["doctor_id"], :name => "index_doctor_weekly_off_days_on_doctor_id"
 
   create_table "doctors_domains", :id => false, :force => true do |t|
     t.integer "doctor_id", :null => false
