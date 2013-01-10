@@ -32,7 +32,7 @@
       },
 
       defaultView: 'agendaWeek',
-      allDaySlot: false,
+      allDaySlot: true, //false,
       axisFormat: 'h:mm:tt',
 
       slotMinutes: <%= @setting.slotMinutes %>,
@@ -154,7 +154,7 @@
 
     eventMouseout: function( event, jsEvent, view ) { },
 
-    events: '/doctors/' + <%= @doctor.id %> + '/appointments.json'
+    eventSources: [ '/doctors/' + <%= @doctor.id %> + '/appointments.json', '/doctors/' + <%= @doctor.id %> + '/vacations.json' ]
 
   };
 

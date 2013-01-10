@@ -1,3 +1,4 @@
 <li>
-	<%= link_to "#{vacation.start} - #{vacation.end}", vacation %>
+	<%= @doctor = vacation.doctor_id %>
+	<%= link_to "#{vacation.start} - #{vacation.end}", doctor_vacation_path(@doctor,vacation) %>
 </li>

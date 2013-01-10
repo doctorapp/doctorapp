@@ -8,7 +8,7 @@ class Vacation < ActiveRecord::Base
 	validates :doctor, 	presence: true
 
 	validate :start_date_cannot_after_end_date
-
+	
 	default_scope order: 'vacations.start DESC'
 
 	private
