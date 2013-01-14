@@ -24,6 +24,14 @@ class Doctor < User
 		self.work_days = DoctorWorkDay.create(monday: true, tuesday: true, wednesday: true, thursday: true, friday: true, saturday: false, sunday: false)	unless self.work_days != nil
 	end
 
+	def self.search(search)
+		if search
+			find(:all, conditions: ['name LIKE ?', "%#{search}%"])
+		else
+			find(:all)
+		end
+	end
+
 # has_many :residence
 #	has_many :office through :residence
 # has_one :doctor_info

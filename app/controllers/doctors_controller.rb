@@ -8,9 +8,8 @@ class DoctorsController < ApplicationController
 	before_filter :correct_user, only: [:edit, :update]
 
 
-
 	def index
-		@doctors = Doctor.paginate(page: params[:page])
+		@doctors = Doctor.search(params[:search])
 	end
 
 	def new 

@@ -1,10 +1,18 @@
 <% provide(:title, 'All doctors') %>
+
 <h1>All doctors</h1>
 
-<%= will_paginate %>
-
+<div class="row">
+	<div class="span6 offset3">
+	<%= form_tag doctors_path, method: 'get' do %>
+  	<p>
+  	  <%= text_field_tag :search, params[:search] %>
+  	  <%= submit_tag "Search", name: nil, class: "btn btn-large btn-primary" %>
+  	</p>
+	<% end %>
+	</div>
+</div>
+	
 <ul class="users">
 <%= render @doctors %>
 </ul>
-
-<%= will_paginate %>
