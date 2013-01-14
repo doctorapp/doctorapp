@@ -8,6 +8,9 @@ class Doctor < User
 
 	has_many :appointments, dependent: :destroy
 
+	has_many :residences, dependent: :destroy
+	has_many :offices, through: :residences, dependent: :destroy
+
 	has_many :vacations, dependent: :destroy
 	has_one :work_days, dependent: :destroy, class_name: "DoctorWorkDay"
 	has_one :calendar_setting, dependent: :destroy
