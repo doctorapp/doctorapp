@@ -81,6 +81,15 @@ module SessionsHelper
 		end
 	end
 
+	def correct_calendar
+		@calendar_setting = CalendarSetting.find(params[:id])
+		@doctor = Doctor.find(params[:doctor_id])
+		if(@calendar_setting.doctor_id != @doctor.id)
+			flash[:notice] = "Not authorized to do it!"
+			redirect_to root_path
+		end
+	end
+
   def sign_out
     self.current_user = nil
     cookies.delete(:remember_token)

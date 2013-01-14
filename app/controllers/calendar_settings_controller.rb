@@ -4,6 +4,7 @@ class CalendarSettingsController < ApplicationController
 
   before_filter :signed_in_user 
   before_filter :doctor?
+  before_filter :correct_calendar
 
   def index
     @calendar_settings = CalendarSetting.all

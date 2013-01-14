@@ -20,7 +20,8 @@
 								<% elsif doctor? %>
 									<li><%= link_to "Profile", profile_page(current_user) %></li>
                   <li><%= link_to "Settings", edit_polymorphic_path(current_user) %></li>
-                  <li><%= link_to "Calendar Settings", edit_polymorphic_path(Doctor.find(current_user.id).calendar_setting) %></li>                  
+                  <% @doctor = Doctor.find(current_user.id) %>
+                  <li><%= link_to "Calendar Settings", edit_doctor_calendar_setting_path(@doctor,@doctor.calendar_setting) %></li>                  
                 <% else %>
                   <li><%= link_to "Profile", profile_page(current_user) %></li>
                   <li><%= link_to "Settings", edit_polymorphic_path(current_user) %></li>

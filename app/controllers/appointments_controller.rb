@@ -107,7 +107,7 @@ class AppointmentsController < ApplicationController
         format.js { render :layout => false }
       else
 				flash.now[:error] =  "Cannot create appointment. pid: #{@appointment.patient_id}. did: #{@appointment.doctor_id}. start: #{@appointment.start}. end: #{@appointment.end}. error: #{@appointment.errors.first}" 
-      	format.html { redirect_to @doctor }
+      	format.html { render action: "new" }
 				format.json { render json: @appointment.errors, status: :unpcoressable_entity }
 				format.js { render :layout => false }
 			end

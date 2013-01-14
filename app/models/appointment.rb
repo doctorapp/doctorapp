@@ -12,6 +12,7 @@ class Appointment < ActiveRecord::Base
 	validates :patient_id, presence: true
 	
 	validate :start_datetime_cannot_after_end_datetime
+	validate :check_conflict
 
 	default_scope order: 'appointments.start DESC'
 
@@ -24,6 +25,21 @@ class Appointment < ActiveRecord::Base
 			else
 				return true
 			end
+		end
+
+		def check_conflict
+			#@appointments = Appointment.where("doctor_id= ? and ( start between ? AND ? or end between ? and ?) ", self[:doctor_id],self[:start], self[:end], self[:start],self[:end]) 
+			@appointments = Appointment.where("doctor_id= ? and ( ( start < ? AND  end > ? ) or ( start < ? and end > ? ) or (start > ? and start < ?))", self[:doctor_id],self[:start], self[:start], self[:end], self[:end], self[:start], self[:end])
+			#@appointments = Appointment.where("doctor_id= ?",202)
+			
+			if @appointments.any?
+				errors[:title] << "The appointment being created is conflict with an existing appointment: "+@appointments[0].title
+				return false
+			else
+				return true
+			end
+			
+			
 		end
 	
 end
