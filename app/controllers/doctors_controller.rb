@@ -70,13 +70,13 @@ class DoctorsController < ApplicationController
 	private 
 
 		def set_work_days(doctor)
-			doctor.work_days.monday 		= params[:monday]
-			doctor.work_days.tuesday 		= params[:tuesday]
-			doctor.work_days.wednesday	= params[:wednesday]
-			doctor.work_days.thursday 	= params[:thursday]
-			doctor.work_days.friday 		= params[:friday]
-			doctor.work_days.saturday		= params[:saturday]
-			doctor.work_days.sunday 		= params[:sunday]
+			doctor.work_days.monday 		= params[:monday] 		? true : false
+			doctor.work_days.tuesday 		= params[:tuesday] 		? true : false
+			doctor.work_days.wednesday	= params[:wednesday] 	? true : false
+			doctor.work_days.thursday 	= params[:thursday] 	? true : false
+			doctor.work_days.friday 		= params[:friday] 		? true : false
+			doctor.work_days.saturday		= params[:saturday] 	? true : false
+			doctor.work_days.sunday 		= params[:sunday] 		? true : false
 		end
 
 end
