@@ -18,6 +18,7 @@ Doctorapp::Application.routes.draw do
     end
     resources :appointments 
     resources :vacations, only: [:new, :create, :index, :show, :destroy]
+    resources :calendar_settings, only: [:edit, :update, :show]
   end
 
 
@@ -30,7 +31,7 @@ Doctorapp::Application.routes.draw do
   resources :password_resets
 	#resources :vacations,	only: [:new, :create, :index, :show, :destroy]
 
-  resources :calendar_settings
+  
 
 	
 
