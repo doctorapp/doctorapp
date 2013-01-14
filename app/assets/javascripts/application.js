@@ -31,6 +31,11 @@ $(function() {
 	$('#vacation_start').datepicker({ dateFormat: 'mm/dd/yy' });
 	$('#vacation_end').datepicker({ dateFormat: 'mm/dd/yy' });
 
+	$("#doctors_search input").keyup(function() {
+    $.get($("#doctors_search").attr("action"), $("#doctors_search").serialize(), null, "script");
+    return false;
+  });
+
 });
 
 // Place your application-specific JavaScript functions and classes here
