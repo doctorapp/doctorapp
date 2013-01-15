@@ -1,0 +1,5 @@
+<%= form_for(current_user.residences.find_by_doctor_id(@doctor), 
+					html: { method: :delete }, 
+					remote: true ) do |f| %>
+	<%= f.submit "Unmanage", class: "btn btn-large" %>
+<% end %>

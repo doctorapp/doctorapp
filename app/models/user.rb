@@ -24,7 +24,6 @@ class User < ActiveRecord::Base
 
 	# validates :password_confirmation, presence: true
 
-
 	# validates_inclusion_of :active, in: [true, false]
 
 	def send_password_reset
@@ -32,6 +31,22 @@ class User < ActiveRecord::Base
  		self.password_reset_sent_at = Time.zone.now
  		save!
  		UserMailer.password_reset(self).deliver
+	end
+
+	def admin?
+		type == 'Admin'
+	end
+
+	def patient?
+		type == 'Patient' 
+	end
+
+	def doctor?
+		type == 'Doctor'
+	end
+
+	def office?
+		type == 'Office'
 	end
 
 	private

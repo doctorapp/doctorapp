@@ -21,24 +21,24 @@ module SessionsHelper
     end
   end
 
-	def admin?
-		current_user.type == 'Admin'
-	end
-
-	def patient?
-		current_user.type == 'Patient' 
-	end
-
-	def doctor?
-		current_user.type == 'Doctor'
+	def admin_user
+		unless current_user.admin?
+			redirect_to root_url, notice: "Not a admin user."
+		end
 	end
 
 	def doctor_user
-		unless doctor?
+		unless current_user.doctor?
 			redirect_to root_url, notice: "Not a doctor user."
 		end
 	end
 
+	def office_user
+		unless current_user.office?
+			redirect_to root_url, notice: "Not a office user."
+		end
+	end
+			
 
   def current_user=(user)
     @current_user = user

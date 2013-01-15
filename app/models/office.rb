@@ -11,6 +11,12 @@ class Office < User
 		residences.find_by_doctor_id(doctor.id)
 	end
 
+	def manage_approved?(doctor)
+		if residences.find_by_doctor_id(doctor.id)
+		 	residences.find_by_doctor_id(doctor.id).approved?
+		end
+	end
+
 	def unmanage!(doctor)
 		# should have extra approval
 		residences.find_by_doctor_id(doctor.id).destroy

@@ -10,12 +10,12 @@ class Residence < ActiveRecord::Base
 
 	before_save :default_values
 
-
 	private 
 
 		# set the approved tag to false; admin approval needed
-		def default_valus
-			self.approved ||= true
+		def default_values
+			self.approved ||= false
+			nil
 		end
 
 	# work_days

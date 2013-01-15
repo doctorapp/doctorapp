@@ -21,6 +21,11 @@ Doctorapp::Application.routes.draw do
   end
 
 	resources :offices
+	resources :residences do  
+		collection do
+			get :pending
+		end
+	end
 
 	resources :admins,		only: [:show]
 	resources :sessions, 	only: [:new, :create, :destroy]
