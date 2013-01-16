@@ -21,9 +21,12 @@ Doctorapp::Application.routes.draw do
     resources :calendar_settings, only: [:edit, :update, :show]
   end
 
-
-
-	#resources :doctors
+	resources :offices
+	resources :residences do  
+		collection do
+			get :pending
+		end
+	end
 
 	resources :admins,		only: [:show]
 	resources :sessions, 	only: [:new, :create, :destroy]
@@ -33,7 +36,6 @@ Doctorapp::Application.routes.draw do
 
   
 
-	
 
 
 	root to: 'static_pages#home'
@@ -43,6 +45,7 @@ Doctorapp::Application.routes.draw do
 
 	match '/signup_doctor', 	to: 'doctors#new' 
 	match '/signup_patient', 	to: 'patients#new'
+	match '/signup_office',		to: 'offices#new'
 
 	match '/help', 						to: 'static_pages#help'
 	match '/about', 					to: 'static_pages#about'

@@ -1,0 +1,18 @@
+<% provide(:title, "Pending office/doctor affiliation") %>
+<h1>Pending office/doctor affiliation</h1>
+
+<div id="pending_residence">
+	<ul class="residence">
+		<% @residences.each do |residence| %>
+			<li>
+				<%= link_to residence.office.name, residence.office %>
+				manages
+				<%= link_to residence.doctor.name, residence.doctor %>
+			</li>
+			<%= form_for residence, :method => :put do |f| %>
+			  <%= f.hidden_field :approved, :value => true %>
+				 <%= f.submit "Approve" %>
+			<% end %>
+		<% end %>
+	</ul>
+</div>

@@ -11,8 +11,8 @@ class SessionsController < ApplicationController
 			else
 				sign_in(user)
 			end
-			flash[:success] = 'Successfully signed in!'
-			redirect_back_or user
+			flash[:success] = "Successfully signed in as #{user.type}!"
+			redirect_back_or root_path
 		else
 			flash.now[:error] = 'Invalid email/password combination'
 			render 'new'

@@ -1,4 +1,4 @@
-<% if (signed_in?  && current_user.type == 'Doctor')%>
+<% if signed_in?  && current_user.doctor? %>
 	<%= render 'shared/calendar' %>
 
 	<% @setting = Doctor.find(current_user.id).calendar_setting  %>
@@ -22,7 +22,14 @@
   		</div>
 	</div>
 
-<% elsif signed_in? %>
+<% elsif signed_in? && current_user.admin? %>
+	<ul>
+		<li><%= link_to 'manage doctor users', doctors_path %></li>
+		<li><%= link_to 'manage patient users', patients_path %></li>
+		<li><%= link_to 'manage offices users', offices_path %></li>
+		<li><%= link_to 'manage office/doctor affiliation', pending_residences_path %></li>
+	</ul>
+<% elsif signed_in? %>	
 	Patient home page place holder	
 <% else %>
 	<%= render 'shared/rootpath_not_signed_in' %>

@@ -8,6 +8,9 @@ class Doctor < User
 
 	has_many :appointments, dependent: :destroy
 
+	has_many :residences, dependent: :destroy
+	has_many :offices, through: :residences, dependent: :destroy
+
 	has_many :vacations, dependent: :destroy
 	has_one :work_days, dependent: :destroy, class_name: "DoctorWorkDay"
 	has_one :calendar_setting, dependent: :destroy
@@ -24,11 +27,19 @@ class Doctor < User
 		self.work_days = DoctorWorkDay.create(monday: true, tuesday: true, wednesday: true, thursday: true, friday: true, saturday: false, sunday: false)	unless self.work_days != nil
 	end
 
-	def self.search(search)
+	def self.search_by_name(search)
 		if search
-			find(:all, conditions: ['name LIKE ?', "%#{search}%"])
+			where('name LIKE ?', "%#{search}%")
 		else
-			find(:all)
+			scoped
+		end
+	end
+
+	def self.paginated_search_by_name(search, page)
+		if search
+			where('name LIKE ?', "%#{search}%").paginate(page: page)
+		else
+			paginate(page: page)
 		end
 	end
 

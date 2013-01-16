@@ -4,7 +4,7 @@
 <script type='text/javascript' src='/javascripts/fullcalendar.js'></script>
 <script type='text/javascript' src='/javascripts/jquery-ui.min.js'></script>
 
-<% if (doctor?) %>
+<% if (current_user.doctor?) %>
   <% @doctor = Doctor.find(current_user.id) %>
 <% else %>
   <% @doctor = Doctor.find(params[:id]) %>

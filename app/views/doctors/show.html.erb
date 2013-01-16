@@ -8,7 +8,8 @@
 			</h1>
 		</section>
 		<section>
-			<%= render 'favorite_form' if ( signed_in? && current_user.type == 'Patient') %>
+			<%= render 'favorite_form' if ( signed_in? && current_user.patient? ) %>
+			<%= render 'manage_form' if ( signed_in? && current_user.office? ) %>
 		</section>
 	</aside>
 

@@ -1,0 +1,8 @@
+<li>
+	<%= gravatar_for office, size: 52 %>
+	<%= link_to office.name, office %>
+
+	<% if current_user && current_user.admin? && current_user!=office %>
+	| <%= link_to 'delete', office, method: :delete, remote: true, data: {confirm: "You sure?"} %>
+	<% end %>
+</li>

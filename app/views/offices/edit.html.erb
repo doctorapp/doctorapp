@@ -1,0 +1,10 @@
+<% provide(:title, @office.name) %>
+<h1>Update your profile</h1>
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= render 'edit_form', conf_button: 'Save changes' %>
+		<%= gravatar_for @office %>
+		<a href="http://gravatar.com/emails" target="_blank">change</a>
+	</div>
+</div>

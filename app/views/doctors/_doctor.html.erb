@@ -1,6 +1,12 @@
 <li>
-  <%= gravatar_for doctor, size: 52 %>
+  
+	<%= gravatar_for doctor, size: 52 %>
   <%= link_to doctor.name, doctor %>
+	
+	<% if current_user && current_user.admin? && current_user!=doctor %>
+	| <%= link_to 'delete', doctor, method: :delete, remote: true, data: {confirm: "You sure?"} %>
+	<% end %>
+	
 	</br>
 	Domain:
 	<% doctor.domains.each_with_index do |domain, idx| %>
@@ -17,4 +23,5 @@
 		,
 		<% end %>
 	<% end %>
-</li>
+
+</li>	

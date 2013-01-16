@@ -9,7 +9,7 @@ class DoctorsController < ApplicationController
 
 
 	def index
-		@doctors = Doctor.search(params[:search])
+		@doctors = Doctor.paginated_search_by_name(params[:search], params[:page])
 	end
 
 	def new 
@@ -61,7 +61,7 @@ class DoctorsController < ApplicationController
 	end
 
 	def destroy
-		Doctor.find(params[:id]).destory
+		Doctor.find(params[:id]).destroy
 		flash[:success] = "Doctor deleted!"
 		redirect_to doctors_path
 	end
