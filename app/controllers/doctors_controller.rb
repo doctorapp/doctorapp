@@ -61,7 +61,7 @@ class DoctorsController < ApplicationController
 	end
 
 	def destroy
-		Doctor.find(params[:id]).destory
+		Doctor.find(params[:id]).destroy
 		flash[:success] = "Doctor deleted!"
 		redirect_to doctors_path
 	end

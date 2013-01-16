@@ -48,7 +48,7 @@ class OfficesController < ApplicationController
 	def destroy
 		Office.find(params[:id]).destroy
 		flash[:success] = "Office user deleted!"
-		redirect_to offices_pathh
+		redirect_to offices_path
 	end
 
 end

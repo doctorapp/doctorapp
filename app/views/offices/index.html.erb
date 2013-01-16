@@ -1,10 +1,9 @@
 <% provide(:title, 'All offices') %>
 <h1>All offices</h1>
 
-<%= will_paginate %>
+<div class="row">
+	<div class="span6 offset3">
+		<div id="offices"><%= render 'offices' %></div>
+	</div>
+</div>
 
-<ul class="users">
-<%= render @offces %>
-</ul>
-
-<%= will_paginate %>

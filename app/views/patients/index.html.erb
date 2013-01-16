@@ -1,10 +1,8 @@
 <% provide(:title, 'All patients') %>
 <h1>All patients</h1>
 
-<%= will_paginate %>
-
-<ul class="users">
-<%= render @patients %>
-</ul>
-
-<%= will_paginate %>
+<div class="row">
+	<div class="span6 offset3">
+		<div id="patients"><%= render 'patients' %></div>
+	</div>
+</div>
