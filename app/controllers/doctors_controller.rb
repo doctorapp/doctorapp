@@ -8,9 +8,8 @@ class DoctorsController < ApplicationController
 	before_filter :correct_user, only: [:edit, :update]
 
 
-
 	def index
-		@doctors = Doctor.paginate(page: params[:page])
+		@doctors = Doctor.search(params[:search])
 	end
 
 	def new 
@@ -19,12 +18,13 @@ class DoctorsController < ApplicationController
 
 	def create
 		@doctor = Doctor.new(params[:doctor])
-		if @doctor.save
+		set_work_days(@doctor)
+		if @doctor.save && @doctor.work_days.save
 		 	sign_in @doctor
-			flash[:success] = "Welcome to g-s-a-d!"
+			flash[:success] = "Welcome to GSAD!"
 			redirect_to @doctor
 		else
-			render :new
+			render 'new'
 		end
 	end
 
@@ -46,12 +46,13 @@ class DoctorsController < ApplicationController
 		params[:doctor][:domain_ids] ||= []
 		params[:doctor][:language_ids] ||= []
 		@doctor = Doctor.find(params[:id])
-		if @doctor.update_attributes(params[:doctor])
+		set_work_days(@doctor)
+		if @doctor.update_attributes(params[:doctor]) && @doctor.work_days.save
 		 	sign_in @doctor
 			flash[:success] = "Successfully updated profile!"
 			redirect_to @doctor
 		else
-			render :edit
+			render 'edit'
 		end
 	end
 
@@ -64,5 +65,17 @@ class DoctorsController < ApplicationController
 		flash[:success] = "Doctor deleted!"
 		redirect_to doctors_path
 	end
+
+	private 
+
+		def set_work_days(doctor)
+			doctor.work_days.monday 		= params[:monday] 		? true : false
+			doctor.work_days.tuesday 		= params[:tuesday] 		? true : false
+			doctor.work_days.wednesday	= params[:wednesday] 	? true : false
+			doctor.work_days.thursday 	= params[:thursday] 	? true : false
+			doctor.work_days.friday 		= params[:friday] 		? true : false
+			doctor.work_days.saturday		= params[:saturday] 	? true : false
+			doctor.work_days.sunday 		= params[:sunday] 		? true : false
+		end
 
 end

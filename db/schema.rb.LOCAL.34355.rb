@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130109214504) do
+ActiveRecord::Schema.define(:version => 20130103212504) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "doctor_id"
@@ -40,21 +40,6 @@ ActiveRecord::Schema.define(:version => 20130109214504) do
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
   end
-
-  create_table "doctor_work_days", :force => true do |t|
-    t.integer  "doctor_id"
-    t.boolean  "monday"
-    t.boolean  "tuesday"
-    t.boolean  "wednesday"
-    t.boolean  "thursday"
-    t.boolean  "friday"
-    t.boolean  "saturday"
-    t.boolean  "sunday"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "doctor_work_days", ["doctor_id"], :name => "index_doctor_weekly_off_days_on_doctor_id"
 
   create_table "doctors_domains", :id => false, :force => true do |t|
     t.integer "doctor_id", :null => false
@@ -112,13 +97,11 @@ ActiveRecord::Schema.define(:version => 20130109214504) do
 
   create_table "vacations", :force => true do |t|
     t.integer  "doctor_id"
+    t.date     "start"
+    t.date     "end"
     t.string   "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.boolean  "allDay"
-    t.datetime "start"
-    t.datetime "end"
-    t.string   "title"
   end
 
   add_index "vacations", ["doctor_id"], :name => "index_vacations_on_doctor_id"
