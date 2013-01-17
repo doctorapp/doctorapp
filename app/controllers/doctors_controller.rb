@@ -18,8 +18,7 @@ class DoctorsController < ApplicationController
 
 	def create
 		@doctor = Doctor.new(params[:doctor])
-		set_work_days(@doctor)
-		if @doctor.save && @doctor.work_days.save
+		if @doctor.save
 		 	sign_in @doctor
 			flash[:success] = "Welcome to GSAD!"
 			redirect_to @doctor
@@ -46,8 +45,7 @@ class DoctorsController < ApplicationController
 		params[:doctor][:domain_ids] ||= []
 		params[:doctor][:language_ids] ||= []
 		@doctor = Doctor.find(params[:id])
-		set_work_days(@doctor)
-		if @doctor.update_attributes(params[:doctor]) && @doctor.work_days.save
+		if @doctor.update_attributes(params[:doctor])
 		 	sign_in @doctor
 			flash[:success] = "Successfully updated profile!"
 			redirect_to @doctor
@@ -65,17 +63,5 @@ class DoctorsController < ApplicationController
 		flash[:success] = "Doctor deleted!"
 		redirect_to doctors_path
 	end
-
-	private 
-
-		def set_work_days(doctor)
-			doctor.work_days.monday 		= params[:monday] 		? true : false
-			doctor.work_days.tuesday 		= params[:tuesday] 		? true : false
-			doctor.work_days.wednesday	= params[:wednesday] 	? true : false
-			doctor.work_days.thursday 	= params[:thursday] 	? true : false
-			doctor.work_days.friday 		= params[:friday] 		? true : false
-			doctor.work_days.saturday		= params[:saturday] 	? true : false
-			doctor.work_days.sunday 		= params[:sunday] 		? true : false
-		end
 
 end
