@@ -63,5 +63,4 @@ class DoctorsController < ApplicationController
 		flash[:success] = "Doctor deleted!"
 		redirect_to doctors_path
 	end
-
 end
