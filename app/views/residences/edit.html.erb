@@ -1,0 +1,9 @@
+<% provide(:title, 'Manage doctor residence') %>
+<h1>Manage residence</h1>
+<h2> of doctor <%= link_to @doctor.name, @doctor %></h2>
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= render 'edit_form', conf_button: 'Save changes' %>
+	</div>
+</div>

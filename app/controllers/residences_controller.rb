@@ -1,12 +1,22 @@
 class ResidencesController < ApplicationController
 
 	before_filter :signed_in_user
-	before_filter :admin_user, only: [:index] 
+	before_filter :admin_user, only: [:pending]
+	before_filter :office_user, only: [:create, :destroy, :edit]
 
 	respond_to :html, :js
 
 	def index
-		@residences = Residence.all
+		if current_user.admin? 
+			@residences = Residence.all
+		elsif current_user.office?
+			@residences = current_user.residences
+		elsif current_user.doctor?
+			@residences = current_user.residences
+		else
+			flash[:warning] = "Action not allowed!"
+			redirect_to root_path
+		end
 	end
 
 	def pending
@@ -25,11 +35,31 @@ class ResidencesController < ApplicationController
 		respond_with @doctor
 	end
 
-	def update
+	def edit
 		@residence = Residence.find(params[:id])
-		@residence.update_attributes(params[:residence])
-		flash[:success] = "Successfully approved office/doctor affiliation"
-		redirect_to pending_residences_path
+		@doctor = @residence.doctor
+	end
+	
+	def update
+		if current_user.office? || current_user.admin?
+			@residence = Residence.find(params[:id])
+		 	@doctor = @residence.doctor
+		 	params[:residence][:office_hour_start] = Time.parse("#{params[:office_hour_start]} UTC")
+			params[:residence][:office_hour_end] = Time.parse("#{params[:office_hour_end]} UTC")
+			if @residence.update_attributes(params[:residence])
+				flash.now[:success] = "Successfully updated residence"
+				if current_user.admin?
+					redirect_to pending_residences_path
+				else current_user.office?
+					render 'edit'
+				end
+			else
+				render 'edit'
+			end
+		else
+			flash[:warning] = "Wrong user!"
+			redirect_to root_path
+		end
 	end
 
 end

@@ -31,6 +31,10 @@ $(function() {
 	$('#vacation_start').datepicker({ dateFormat: 'mm/dd/yy' });
 	$('#vacation_end').datepicker({ dateFormat: 'mm/dd/yy' });
 
+	// residence setting
+	$('#office_hour_start').timepicker({ 	hourMin: 7, 	hourMax: 18 }); 
+	$('#office_hour_end').timepicker({ hourMin: 7, hourMax: 18 });
+
 	$("#doctors_search input").keyup(function() {
     $.get($("#doctors_search").attr("action"), $("#doctors_search").serialize(), null, "script");
     return false;

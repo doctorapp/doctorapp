@@ -6,7 +6,7 @@ class DoctorsController < ApplicationController
 	before_filter :signed_in_sign_up, only:[:new, :create]
 	before_filter :signed_in_user, only: [:edit, :upadte, :show, :index] 
 	before_filter :correct_user, only: [:edit, :update]
-
+	before_filter :office_user, only: [:managed]
 
 	def index
 		@doctors = Doctor.search_by_name(params[:search]).paginate(page: params[:page], per_page: 20)

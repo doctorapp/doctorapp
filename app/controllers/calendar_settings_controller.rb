@@ -3,7 +3,7 @@ class CalendarSettingsController < ApplicationController
   # GET /calendar_settings.json
 
   before_filter :signed_in_user 
-  before_filter :doctor?
+  before_filter :doctor_user
 
   def index
     @calendar_settings = CalendarSetting.all

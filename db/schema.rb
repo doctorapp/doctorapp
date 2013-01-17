@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130114173056) do
+ActiveRecord::Schema.define(:version => 20130117063715) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "doctor_id"
@@ -96,9 +96,19 @@ ActiveRecord::Schema.define(:version => 20130114173056) do
   create_table "residences", :force => true do |t|
     t.integer  "doctor_id"
     t.integer  "office_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.boolean  "approved"
+    t.integer  "slot_minutes"
+    t.time     "office_hour_start"
+    t.time     "office_hour_end"
+    t.boolean  "monday"
+    t.boolean  "tuesday"
+    t.boolean  "wednesday"
+    t.boolean  "thursday"
+    t.boolean  "friday"
+    t.boolean  "saturday"
+    t.boolean  "sunday"
   end
 
   add_index "residences", ["approved"], :name => "index_residences_on_approved"
