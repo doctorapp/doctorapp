@@ -35,14 +35,6 @@ class Doctor < User
 		end
 	end
 
-	def self.paginated_search_by_name(search, page)
-		if search
-			where('name LIKE ?', "%#{search}%").paginate(page: page)
-		else
-			paginate(page: page)
-		end
-	end
-
 # has_many :residence
 #	has_many :office through :residence
 # has_one :doctor_info

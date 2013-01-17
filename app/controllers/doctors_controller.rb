@@ -9,7 +9,7 @@ class DoctorsController < ApplicationController
 
 
 	def index
-		@doctors = Doctor.paginated_search_by_name(params[:search], params[:page])
+		@doctors = Doctor.search_by_name(params[:search]).paginate(page: params[:page], per_page: 20)
 	end
 
 	def new 

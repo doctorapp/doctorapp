@@ -6,7 +6,7 @@ class OfficesController < ApplicationController
 	before_filter :correct_user, only: [:edit, :update]
 
 	def index
-		@offices = Office.paginate(page: params[:page])
+		@offices = Office.paginate(page: params[:page], per_page: 20)
 	end
 
 	def new
