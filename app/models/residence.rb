@@ -33,11 +33,13 @@ class Residence < ActiveRecord::Base
 		end
 
 		def office_hour_validation
-			if self[:office_hour_end] <= self[:office_hour_start] 
-				errors[:office_hour_start] << "Office hour start time can't be later than end time!"
-				return false
-			else
-				return true
+			unless self[:office_hour_end] == nil # when approving residence, office_hour_start/end will be nil
+				if self[:office_hour_end] <= self[:office_hour_start] 
+					errors[:office_hour_start] << "Office hour start time can't be later than end time!"
+					return false
+				else
+					return true
+				end
 			end
 		end
 

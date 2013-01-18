@@ -38,24 +38,24 @@ class ResidencesController < ApplicationController
 	def edit
 		@residence = Residence.find(params[:id])
 		@doctor = @residence.doctor
+		@vacation = @doctor.vacations.new
 	end
 	
 	def update
-		if current_user.office? || current_user.admin?
-			@residence = Residence.find(params[:id])
-		 	@doctor = @residence.doctor
-		 	params[:residence][:office_hour_start] = Time.parse("#{params[:office_hour_start]} UTC")
+		@residence = Residence.find(params[:id])
+		if current_user.office?
+			params[:residence][:office_hour_start] = Time.parse("#{params[:office_hour_start]} UTC")
 			params[:residence][:office_hour_end] = Time.parse("#{params[:office_hour_end]} UTC")
 			if @residence.update_attributes(params[:residence])
 				flash.now[:success] = "Successfully updated residence"
-				if current_user.admin?
-					redirect_to pending_residences_path
-				else current_user.office?
-					render 'edit'
-				end
+				render 'edit'
 			else
 				render 'edit'
 			end
+		elsif current_user.admin?	# approve residence
+			@residence.update_attributes(params[:residence])
+		 	flash[:success] = "Successfully apporved residence"
+			redirect_to pending_residences_path
 		else
 			flash[:warning] = "Wrong user!"
 			redirect_to root_path

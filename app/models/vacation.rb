@@ -1,5 +1,5 @@
 class Vacation < ActiveRecord::Base
-  attr_accessible :description, :doctor_id, :end, :start
+  attr_accessible :title, :description, :doctor_id, :end, :start
 
 	belongs_to :doctor
 
@@ -9,7 +9,7 @@ class Vacation < ActiveRecord::Base
 
 	validate :start_date_cannot_after_end_date
 	
-	default_scope order: 'vacations.start DESC'
+	default_scope order: 'vacations.start ASC'
 
 	private
 		def	start_date_cannot_after_end_date
