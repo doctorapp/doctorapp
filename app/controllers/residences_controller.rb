@@ -43,6 +43,8 @@ class ResidencesController < ApplicationController
 	
 	def update
 		@residence = Residence.find(params[:id])
+		@doctor = @residence.doctor
+		@vacation = @doctor.vacations.new
 		if current_user.office?
 			params[:residence][:office_hour_start] = Time.parse("#{params[:office_hour_start]} UTC")
 			params[:residence][:office_hour_end] = Time.parse("#{params[:office_hour_end]} UTC")
