@@ -17,8 +17,7 @@ Doctorapp::Application.routes.draw do
       get :doctor_appointments
     end
     resources :appointments 
-    resources :vacations, only: [:new, :create, :index, :show, :destroy]
-    resources :calendar_settings, only: [:edit, :update, :show]
+  	resources :vacations, only: [:new, :create, :index, :show, :destroy]
   end
 
 	resources :offices

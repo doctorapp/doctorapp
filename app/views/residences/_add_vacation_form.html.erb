@@ -1,0 +1,17 @@
+<%= form_for([@doctor, @vacation]) do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
+
+	<%= f.label :title %>
+	<%= f.text_field :title %>
+
+	<%= f.label :description %>
+	<%= f.text_field :description %>
+		
+	<%= f.label :start %>
+	<%= f.text_field :start %>
+
+	<%= f.label :end %>
+	<%= f.text_field :end %> 
+
+	<%= f.submit conf_button, class: "btn btn-large btn-primary" %>
+<% end %>

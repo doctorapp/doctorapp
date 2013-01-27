@@ -1,52 +1,34 @@
 <%= form_for(@doctor) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-
-  <%= f.label :name %>
+  
+	<%= f.label :name %>
   <%= f.text_field :name %>
-
+	  	
   <%= f.label :email %>
   <%= f.text_field :email %>
-
+	  	
   <%= f.label :password %>
   <%= f.password_field :password %>
-
+	  	
   <%= f.label :password_confirmation, "Confirm Password" %>
   <%= f.password_field :password_confirmation %>
-
-	<%= f.label "Domains" %>
-	<div class='tickbox'>
-		<% for domain in Domain.find(:all) %>
-			<%= check_box_tag "doctor[domain_ids][]", domain.id, @doctor.domains.include?(domain) %>
-			<%= domain.name %> </br>
-		<% end %>
-	</div>
-
-	<%= f.label "Languages" %>
-	<div class='tickbox'>
-		<% for language in Language.find(:all) %>
+	  	
+  <%= f.label "Domains" %>
+  <div class='tickbox'>
+    <% for domain in Domain.find(:all) %>
+      <%= check_box_tag "doctor[domain_ids][]", domain.id, @doctor.domains.include?(domain) %>
+      <%= domain.name %> </br>
+    <% end %>
+  </div>
+	  	
+  <%= f.label "Languages" %>
+  <div class='tickbox'>
+	<% for language in Language.find(:all) %>
 			<%= check_box_tag "doctor[language_ids][]", language.id, @doctor.languages.include?(language) %>
 			<%= language.name %> </br>
 		<% end %>
  	</div>
 
-	<%= f.label "Work days" %>
-	<div class='tickbox'>
-		<%= check_box_tag :monday, 1, @doctor.work_days.monday %>
-		<%= "Monday" %></br>
-		<%= check_box_tag :tuesday, 1, @doctor.work_days.tuesday %>
-		<%= "Tuesday" %></br>	
-		<%= check_box_tag :wednesday, 1, @doctor.work_days.wednesday%>
-		<%= "Wednesday" %></br>	
-		<%= check_box_tag :thursday, 1, @doctor.work_days.thursday %>
-		<%= "Thursday" %></br>	
-		<%= check_box_tag :friday, 1, @doctor.work_days.friday%>
-		<%= "Friday" %></br>	
-		<%= check_box_tag :saturday, 1, @doctor.work_days.saturday %>
-		<%= "Saturday" %></br>	
-		<%= check_box_tag :sunday, 1, @doctor.work_days.sunday %>
-		<%= "Sunday" %></br>	
-	</div>
-
-  <%= f.submit conf_button, class: "btn btn-large btn-primary" %>
+	<%= f.submit conf_button, class: "btn btn-large btn-primary" %>
 
 <% end %>

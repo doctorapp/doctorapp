@@ -1,6 +1,19 @@
 <% provide(:title, "New vacation") %>
 <h1>New vacation</h1>
 
-<%= render 'form' %>
+	<div class="row">
+		<div class="span6 offset3">
+			<h3>All vacations</h3>
+			<%= render 'vacations' %>
+		</div>
+	</div>
 
-<%= link_to 'See all vacations', @doctor %>
+</br>
+</br>
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= render 'edit_form', conf_button: 'Add my vacation' %>
+		</div>
+</div>
+

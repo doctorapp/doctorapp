@@ -1,0 +1,33 @@
+<%= form_for(@residence) do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
+
+	<%= f.label :slot_minutes %>
+	<%= f.text_field :slot_minutes %>
+
+	<%= label_tag :office_hour_start %>
+	<%= text_field_tag :office_hour_start, @residence.office_hour_start.to_s(:time) %>
+
+	<%= label_tag :office_hour_end %>
+	<%= text_field_tag :office_hour_end, @residence.office_hour_end.to_s(:time) %>
+
+	<%= f.label 'Work days' %>
+	<div class='tickbox'>
+		<%= check_box :residence, :monday %>
+		<%= "Monday" %></br>
+		<%= check_box :residence, :tuesday %>
+		<%= "Tuesday" %></br>
+		<%= check_box :residence, :wednesday %>
+		<%= "Wednesday" %></br>
+		<%= check_box :residence, :thursday %>
+		<%= "Thursday" %></br>
+		<%= check_box :residence, :friday %>
+		<%= "Friday" %></br>
+		<%= check_box :residence, :saturday %>
+		<%= "Saturday" %></br>
+		<%= check_box :residence, :sunday %>
+		<%= "Sunday" %></br>
+	</div>
+  
+	<%= f.submit conf_button, class: "btn btn-large btn-primary" %>
+
+<% end %>

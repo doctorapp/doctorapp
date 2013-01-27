@@ -1,7 +1,11 @@
 module SessionsHelper
   
 	def sign_in_and_remember(user)
-    cookies.permanent[:remember_token] = user.remember_token
+		if user.office?
+			cookies[:remember_token] = {value: user.remember_token, expires: 9.hours.from_now}
+		else
+    	cookies.permanent[:remember_token] = user.remember_token
+		end
     self.current_user = user
   end
 

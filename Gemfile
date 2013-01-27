@@ -7,11 +7,11 @@ gem 'faker', '1.0.1'
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'
 
-gem 'sqlite3'
 
 
 group :development, :test do
   gem 'rspec-rails', '2.11.0'
+	gem 'sqlite3'
 end
 
 group :development do
@@ -35,3 +35,7 @@ group :test do
   gem 'database_cleaner', '0.7.0'
 end
 
+
+group :production do
+	gem 'pg'
+end
