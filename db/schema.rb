@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130129004348) do
+ActiveRecord::Schema.define(:version => 20130129195404) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "doctor_id"
@@ -114,8 +114,10 @@ ActiveRecord::Schema.define(:version => 20130129004348) do
 
   create_table "federal_holidays", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.string   "chronic_pattern"
+    t.string   "base_date"
   end
 
   create_table "languages", :force => true do |t|

@@ -18,10 +18,8 @@ class DoctorsController < ApplicationController
 
 	def create
 		@doctor = Doctor.new(params[:doctor])
-		# doctor federal holiday population...
-		update_doctor_federal_holidays(@doctor, params[:doctor][:federal_holiday_ids])
-		if @doctor.save
-		 	sign_in @doctor
+		if @doctor.save && update_doctor_federal_holidays(@doctor, params[:doctor][:federal_holiday_ids])
+			sign_in @doctor
 			flash[:success] = "Welcome to GSAD!"
 			redirect_to @doctor
 		else
@@ -48,9 +46,7 @@ class DoctorsController < ApplicationController
 		params[:doctor][:language_ids] ||= []
 		params[:doctor][:federal_holiday_ids] ||= []
 		@doctor = Doctor.find(params[:id])
-		# doctor federal holiday population...
-		update_doctor_federal_holidays(@doctor, params[:doctor][:federal_holiday_ids])
-		if @doctor.update_attributes(params[:doctor])
+		if @doctor.update_attributes(params[:doctor]) && update_doctor_federal_holidays(@doctor, params[:doctor][:federal_holiday_ids])
 		 	sign_in @doctor
 			flash[:success] = "Successfully updated profile!"
 			redirect_to @doctor
@@ -73,14 +69,29 @@ class DoctorsController < ApplicationController
 
 	def update_doctor_federal_holidays(doctor, ids)
 
-		ids.each do |id| 
+		# clean up all doctor's holidays
+		doctor.federals.destroy_all
+
 		# get the ticked holidays
-		# get the days from FederalHolidayDates
-		
-		# populate them into doctor_off_days, with type 'Federal'	
+		unless ids.nil? || ids.empty?
+			ids.each do |id| 
+				federal_holiday = FederalHoliday.find(id)
 
+				# get the days from FederalHolidayDates
+			 	federal_holiday_dates = FederalHolidayDate.where(federal_holiday_id: id)
+			  unless federal_holiday_dates.empty?
+					federal_holiday_dates.each do |date|
+						# populate them into doctor_off_days, with type 'Federal'	
+						@federal = doctor.federals.build()
+			 			@federal.doctor_id = doctor.id
+						@federal.start = date.date
+						@federal.end = date.date.tomorrow
+						@federal.title = federal_holiday.name
+						@federal.save
+					end
+				end
+		 	end
 		end
-
 	end
 
 end
