@@ -18,6 +18,8 @@ class DoctorsController < ApplicationController
 
 	def create
 		@doctor = Doctor.new(params[:doctor])
+		# doctor federal holiday population...
+		update_doctor_federal_holidays(@doctor, params[:doctor][:federal_holiday_ids])
 		if @doctor.save
 		 	sign_in @doctor
 			flash[:success] = "Welcome to GSAD!"
@@ -44,7 +46,10 @@ class DoctorsController < ApplicationController
 	def update
 		params[:doctor][:domain_ids] ||= []
 		params[:doctor][:language_ids] ||= []
+		params[:doctor][:federal_holiday_ids] ||= []
 		@doctor = Doctor.find(params[:id])
+		# doctor federal holiday population...
+		update_doctor_federal_holidays(@doctor, params[:doctor][:federal_holiday_ids])
 		if @doctor.update_attributes(params[:doctor])
 		 	sign_in @doctor
 			flash[:success] = "Successfully updated profile!"
@@ -63,4 +68,19 @@ class DoctorsController < ApplicationController
 		flash[:success] = "Doctor deleted!"
 		redirect_to doctors_path
 	end
+
+	private
+
+	def update_doctor_federal_holidays(doctor, ids)
+
+		ids.each do |id| 
+		# get the ticked holidays
+		# get the days from FederalHolidayDates
+		
+		# populate them into doctor_off_days, with type 'Federal'	
+
+		end
+
+	end
+
 end

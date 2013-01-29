@@ -1,6 +1,7 @@
 class Doctor < User
 	attr_accessible :language_ids
 	attr_accessible :domain_ids
+	attr_accessible :federal_holiday_ids
 	
 	has_and_belongs_to_many :languages
 	has_and_belongs_to_many :domains
@@ -11,6 +12,10 @@ class Doctor < User
 	has_many :offices, through: :residences, dependent: :destroy
 
 	has_many :vacations, dependent: :destroy
+
+	has_many :federals, dependent: :destroy
+	has_and_belongs_to_many :federal_holidays
+
 #	has_one :work_days, dependent: :destroy, class_name: "DoctorWorkDay"
 	has_one :calendar_setting, dependent: :destroy
 

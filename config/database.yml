@@ -18,10 +18,4 @@ test:
   pool: 5
   timeout: 5000
 
-production:
-  adapter: postgresql
-	host: localhost
-	username: doctorapp
-	database: doctorapp-prod
-	connection: 5
 
