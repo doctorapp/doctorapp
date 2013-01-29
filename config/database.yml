@@ -19,9 +19,14 @@ test:
   timeout: 5000
 
 production:
-  adapter: postgresql
-	host: localhost
-	username: doctorapp
-	database: doctorapp-prod
-	connection: 5
+  adapter: sqlite3
+  database: db/development.sqlite3
+  pool: 5
+  timeout: 5000
+#production:
+#  adapter: postgresql
+#	host: localhost
+#	username: doctorapp
+#	database: doctorapp-prod
+#	connection: 5
 
