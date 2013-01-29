@@ -13,7 +13,8 @@ class Doctor < User
 	has_many :offices, through: :residences, dependent: :destroy
 
 	has_many :vacations, dependent: :destroy
-	has_many :federals, dependent: :destroy
+	has_many :federals, dependent: :destroy	
+	has_many :doctor_off_days, dependent: :destroy
 
 	def self.search_by_name(search)
 		if search
