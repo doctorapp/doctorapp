@@ -30,7 +30,6 @@ class VacationsController < ApplicationController
 		@vacation.start = DateTime.strptime(params[:vacation][:start], '%m/%d/%Y')
 		@vacation.end = DateTime.strptime(params[:vacation][:end], '%m/%d/%Y')+1.day
 		@vacation.doctor_id = @doctor.id
-		@vacation.allDay ||= false
 		@vacation.title ||= 'Vacation'
 
 		if @vacation.save

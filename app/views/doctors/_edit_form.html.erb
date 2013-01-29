@@ -29,6 +29,14 @@
 		<% end %>
  	</div>
 
+	<%= f.label "Observed Federal Holidays" %>
+	<div class='tickbox'>
+	<% for federal_holiday in FederalHoliday.find(:all) %>
+		<%= check_box_tag "doctor[federal_holiday_ids][]", federal_holiday.id, @doctor.federal_holidays.include?(federal_holiday) %>
+		<%= federal_holiday.name %> </br>
+	<% end %>
+	</div>
+
 	<%= f.submit conf_button, class: "btn btn-large btn-primary" %>
 
 <% end %>

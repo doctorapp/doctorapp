@@ -5,6 +5,7 @@ namespace :db do
   	make_doctors
 		make_languages
 		make_domains
+		make_federal_holidays
 		make_doctors_languages
 		make_doctors_domains
 		make_patients
@@ -44,6 +45,19 @@ namespace :db do
 		Domain.create!(name: "Dentistry")
 		Domain.create!(name: "Optometry")
 		Domain.create!(name: "Physiotherapy")
+	end
+
+	def make_federal_holidays
+		FederalHoliday.create!(name: "New Year Day")
+		FederalHoliday.create!(name: "Birthday of Martin Luther King Jr.")
+		FederalHoliday.create!(name: "Washington's Birthday")
+		FederalHoliday.create!(name: "Memorial Day")
+		FederalHoliday.create!(name: "Independencey Day")
+		FederalHoliday.create!(name: "Labor Day")
+		FederalHoliday.create!(name: "Columbus Day")
+		FederalHoliday.create!(name: "Veterans Day")
+		FederalHoliday.create!(name: "Thanksgiving Day")
+		FederalHoliday.create!(name: "Christmas Day")
 	end
 
 	def make_doctors_languages
