@@ -3,13 +3,14 @@ class Appointment < ActiveRecord::Base
 
 	belongs_to :patient
 	belongs_to :doctor
-
+	belongs_to :office
 
 	validates :title, presence: true
 	validates :start, presence: true
 	validates :end, presence: true
 	validates :doctor_id, presence: true
 	validates :patient_id, presence: true
+	validates :office_id, presence: true
 	
 	validate :start_datetime_cannot_after_end_datetime
 

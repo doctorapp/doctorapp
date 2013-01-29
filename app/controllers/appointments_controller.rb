@@ -6,7 +6,6 @@ class AppointmentsController < ApplicationController
   #before_filter :correct_user
 
 
-
   def index
 
     if ( current_user.type == 'Doctor')
