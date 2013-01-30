@@ -11,7 +11,6 @@ class Appointment < ActiveRecord::Base
 	validates :doctor_id, presence: true
 	validates :patient_id, presence: true
 	validates :office_id, presence: true
-	
 	validate :start_datetime_cannot_after_end_datetime
 
 	default_scope order: 'appointments.start DESC'

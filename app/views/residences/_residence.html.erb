@@ -1,5 +1,5 @@
 <li>
-	<%= link_to "Residence", residence %>
+	<%= link_to "Residence", doctor_residence_path(residence.doctor, residence) %>
 	of
 	<%= link_to "Doctor #{residence.doctor.name}", residence.doctor %> 
 </li>

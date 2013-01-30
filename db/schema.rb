@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130129234444) do
+ActiveRecord::Schema.define(:version => 20130130054643) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "doctor_id"
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(:version => 20130129234444) do
   end
 
   add_index "residences", ["approved"], :name => "index_residences_on_approved"
+  add_index "residences", ["doctor_id", "office_id"], :name => "index_residences_on_doctor_id_and_office_id", :unique => true
   add_index "residences", ["doctor_id"], :name => "index_residences_on_doctor_id"
   add_index "residences", ["office_id"], :name => "index_residences_on_office_id"
 

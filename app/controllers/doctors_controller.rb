@@ -56,7 +56,17 @@ class DoctorsController < ApplicationController
 	end
 
 	def show
-		@doctor = Doctor.find(params[:id])	
+		@doctor = Doctor.find(params[:id])
+		if @doctor.residences.size == 0
+			# grey out the calendar... propose to manage
+			flash[:notice] = "No office associated with doctor yet!"
+		elsif @doctor.residences.size == 1
+			# redirect to the only residence 
+			redirect_to doctor_residence_path(@doctor, @doctor.residences.first)
+		else
+			flash[:notice] = "Please choose the office location"
+			redirect_to doctor_residences_path(@doctor)
+		end 
 	end
 
 	def destroy

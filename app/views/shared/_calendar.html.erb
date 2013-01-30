@@ -4,14 +4,14 @@
 <script type='text/javascript' src='/javascripts/fullcalendar.js'></script>
 <script type='text/javascript' src='/javascripts/jquery-ui.min.js'></script>
 
-<% if (current_user.doctor?) %>
-  <% @doctor = Doctor.find(current_user.id) %>
-<% else %>
-  <% @doctor = Doctor.find(params[:id]) %>
-<% end %>
+<!-- unnecessary initialization; @doctor should have been initialized in controller -->
+<!-- if (current_user.doctor?) -->
+  <!-- @doctor = Doctor.find(current_user.id) -->
+<!-- elsif params[:doctor_id] -->
+  <!-- @doctor = Doctor.find(params[:doctor_id]) -->
+<!-- end %>
 
-
-<% @setting = @doctor.calendar_setting %>
+<!-- @setting = @doctor.calendar_setting > -->
 
 
 <script type='text/javascript'>
@@ -35,11 +35,11 @@
       allDaySlot: true, //false,
       axisFormat: 'h:mm:tt',
 
-      slotMinutes: <%= @setting.slotMinutes %>,
-      defaultEventMinutes: <%= @setting.defaultEventMinutes %>,
-      firstHour: <%= @setting.firstHour %>,
-      minTime: <%= @setting.minTime %>,
-      maxTime: <%= @setting.maxTime %>,
+      slotMinutes: <%= 30  %>,
+      defaultEventMinutes: <%= 30 %>,
+      firstHour: <%= 8  %>,
+      minTime: <%= 8 %>,
+      maxTime: <%= 16 %>,
       
       selectable: true,
       selectHelper: true,

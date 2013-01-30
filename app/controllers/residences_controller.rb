@@ -2,25 +2,29 @@ class ResidencesController < ApplicationController
 
 	before_filter :signed_in_user
 	before_filter :admin_user, only: [:pending]
-	before_filter :office_user, only: [:create, :destroy, :edit]
+	before_filter :office_user, only: [:create, :destroy, :edit, :managed]
 
 	respond_to :html, :js
 
 	def index
-		if current_user.admin? 
-			@residences = Residence.all
-		elsif current_user.office?
-			@residences = current_user.residences
-		elsif current_user.doctor?
-			@residences = current_user.residences
-		else
-			flash[:warning] = "Action not allowed!"
-			redirect_to root_path
+		@doctor = Doctor.find(params[:doctor_id])
+		@residences = @doctor.residences
+		if @residences.size == 1
+			redirect_to doctor_residence_url(@doctor, @residences.first)
 		end
 	end
 
+	def show
+		@doctor = Doctor.find(params[:doctor_id])
+		@residence = Residence.find(params[:id])
+	end
+	
 	def pending
 		@residences = Residence.where(approved: false)
+	end
+
+	def managed
+		@residences = current_user.residences		
 	end
 
 	def create
@@ -40,7 +44,7 @@ class ResidencesController < ApplicationController
 		@doctor = @residence.doctor
 		@vacation = @doctor.vacations.new
 	end
-	
+
 	def update
 		@residence = Residence.find(params[:id])
 		@doctor = @residence.doctor
@@ -50,9 +54,9 @@ class ResidencesController < ApplicationController
 			params[:residence][:office_hour_end] = Time.parse("#{params[:office_hour_end]} UTC")
 			if @residence.update_attributes(params[:residence])
 				flash.now[:success] = "Successfully updated residence"
-				render 'edit'
+				redirect_to edit_doctor_residence_path(@doctor, @residence)
 			else
-				render 'edit'
+				redirect_to edit_doctor_residence_path(@doctor, @residence)
 			end
 		elsif current_user.admin?	# approve residence
 			@residence.update_attributes(params[:residence])
