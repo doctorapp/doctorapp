@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130130054643) do
+ActiveRecord::Schema.define(:version => 20130131202852) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "doctor_id"
@@ -23,13 +23,13 @@ ActiveRecord::Schema.define(:version => 20130130054643) do
     t.string   "url"
     t.boolean  "editable"
     t.string   "source"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.integer  "office_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "residence_id"
   end
 
-  add_index "appointments", ["doctor_id"], :name => "index_appointments_on_doctor_id"
   add_index "appointments", ["patient_id"], :name => "index_appointments_on_patient_id"
+  add_index "appointments", ["residence_id"], :name => "index_appointments_on_residence_id"
 
   create_table "calendar_settings", :force => true do |t|
     t.integer  "doctor_id"

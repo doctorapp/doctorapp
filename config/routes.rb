@@ -16,17 +16,18 @@ Doctorapp::Application.routes.draw do
     member do
       get :doctor_appointments
     end
-    resources :appointments 
   	resources :vacations, only: [:new, :create, :index, :show, :destroy]
 		resources :residences, only: [:index, :show, :edit, :update]
   end
 
 	resources :offices
+	
 	resources :residences, only: [:create, :destroy, :update] do   # no direct access to residences, except javascript create/destroy
 		collection do
 			get :pending
 			get :managed
 		end
+		resournces :appointments
 	end
 
 	resources :admins,		only: [:show]

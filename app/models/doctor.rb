@@ -6,8 +6,6 @@ class Doctor < User
 	has_and_belongs_to_many :languages
 	has_and_belongs_to_many :domains
 	has_and_belongs_to_many :federal_holidays
-	
-	has_many :appointments, dependent: :destroy
 
 	has_many :residences, dependent: :destroy
 	has_many :offices, through: :residences, dependent: :destroy
