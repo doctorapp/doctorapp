@@ -11,20 +11,23 @@ Doctorapp::Application.routes.draw do
 		end
 	end
 
+resources :searches
 
   resources :doctors do
     member do
       get :doctor_appointments
     end
-    resources :appointments 
+    
   	resources :vacations, only: [:new, :create, :index, :show, :destroy]
   end
 
 	resources :offices
+  
 	resources :residences do  
 		collection do
 			get :pending
 		end
+    resources :appointments 
 	end
 
 	resources :admins,		only: [:show]

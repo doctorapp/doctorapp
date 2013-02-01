@@ -23,7 +23,9 @@
 									<li><%= link_to "Profile", profile_page(current_user) %></li>
                   <li><%= link_to "Settings", edit_polymorphic_path(current_user) %></li>
                   <% @doctor = Doctor.find(current_user.id) %>
-                  <li><%= link_to "Calendar Settings", edit_doctor_calendar_setting_path(@doctor,@doctor.calendar_setting) %></li>                  
+                  <% if @doctor.residences %>
+                     <li><%= link_to "Residence Settings", @doctor %></li>
+                  <% end %>
                 <% else %>
                   <li><%= link_to "Profile", profile_page(current_user) %></li>
                   <li><%= link_to "Settings", edit_polymorphic_path(current_user) %></li>
