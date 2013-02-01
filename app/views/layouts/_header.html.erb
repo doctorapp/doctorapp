@@ -24,7 +24,7 @@
                   <li><%= link_to "Settings", edit_polymorphic_path(current_user) %></li>
                   <% @doctor = Doctor.find(current_user.id) %>
                   <% if @doctor.residences %>
-                     <li><%= link_to "Residence Settings", @doctor %></li>
+                     <li><%= link_to "Residence Settings", @doctor.residences %></li>
                   <% end %>
                 <% else %>
                   <li><%= link_to "Profile", profile_page(current_user) %></li>

@@ -1,0 +1,14 @@
+<h1>Search Results</h1>
+
+<% @appointments = @search.appointments %>
+
+<ul class="appointments">
+  <% @appointments.each do |appointment| %>
+    <li>
+       <%= link_to appointment.title, doctor_appointment_path(Doctor.find(appointment.doctor_id),appointment) %>
+
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "Back to Home", root_url %>

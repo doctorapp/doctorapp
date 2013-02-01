@@ -12,7 +12,7 @@
 
 <p>
   <b>Doctor:</b>
-  <%= Doctor.find(@appointment.doctor_id).name %>
+  <%= Doctor.find(@residence.doctor_id).name %>
 </p>
 
 <p>
@@ -33,5 +33,5 @@
 
 
 
-<%= link_to 'Edit', edit_appointment_path(@appointment) , {:class => 'linkedTo'} %> |
-<%= link_to 'Back', appointments_path , { :class => 'linkedTo'} %>
+<%= link_to 'Edit', edit_residence_appointment_path(Doctor.find(@residence.doctor_id), @appointment) , {:class => 'linkedTo'} %> |
+<%= link_to 'Back', root_url , { :class => 'linkedTo'} %>

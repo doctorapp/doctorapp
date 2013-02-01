@@ -1,0 +1,33 @@
+<h1>Advanced Search</h1>
+
+<% @min_step=5 %>
+
+<%= form_for @search do |f| %>
+  <div class="field">
+    <%= f.label :start %><br />
+    <%= f.datetime_select :start, :minute_step => @min_step %>
+  </div>
+  <div class="field">
+    <%= f.label :end %><br />
+    <%= f.datetime_select :end, :minute_step => @min_step %>
+  </div>
+  <div class="field">
+    <%= f.label :post_code %><br />
+    <%= f.number_field :post_code %>
+  </div>
+      
+  <div class="field">
+    <%= f.label :domain_id %><br />
+    <%= f.collection_select :domain_id, Domain.order(:name), :id, :name, include_blank: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :language_id %><br />
+    <%= f.collection_select :language_id, Language.order(:name), :id, :name, include_blank: true %>
+  </div>
+
+
+
+
+  <div class="actions"><%= f.submit "Search" %></div>
+<% end %>

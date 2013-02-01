@@ -8,7 +8,8 @@
 <!-- if (current_user.doctor?) -->
   <!-- @doctor = Doctor.find(current_user.id) -->
 <!-- elsif params[:doctor_id] -->
-  <!-- @doctor = Doctor.find(params[:doctor_id]) -->
+  <% @residence = Residence.find(params[:id]) %> 
+  <% @doctor = Doctor.find(@residence.doctor_id) %>
 <!-- end %>
 
 <!-- @setting = @doctor.calendar_setting > -->
@@ -35,11 +36,11 @@
       allDaySlot: true, //false,
       axisFormat: 'h:mm:tt',
 
-      slotMinutes: <%= 30  %>,
-      defaultEventMinutes: <%= 30 %>,
-      firstHour: <%= 8  %>,
-      minTime: <%= 8 %>,
-      maxTime: <%= 16 %>,
+      slotMinutes: <%= @residence.slot_minutes %>,
+      defaultEventMinutes: <%= @residence.slot_minutes %>,
+      firstHour: <%=  @residence.office_hour_start.strftime("%H")  %>,
+      minTime: <%= @residence.office_hour_start.strftime("%H") %>,
+      maxTime: <%= @residence.office_hour_end.strftime("%H") %>,
       
       selectable: true,
       selectHelper: true,
@@ -154,7 +155,7 @@
 
     eventMouseout: function( event, jsEvent, view ) { },
 
-    eventSources: [ '/doctors/' + <%= @doctor.id %> + '/appointments.json', '/doctors/' + <%= @doctor.id %> + '/vacations.json' ]
+    eventSources: [ '/residences/' + <%= @residence.id %> + '/appointments.json', '/doctors/' + <%= @doctor.id %> + '/vacations.json' ]
 
   };
 

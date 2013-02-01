@@ -8,16 +8,19 @@ class AppointmentsController < ApplicationController
 
   def index
 
-    if ( current_user.type == 'Doctor')
-      doctor_id= current_user.id
+    #if ( current_user.type == 'Doctor')
+    #  doctor_id= current_user.id
       #@appointment.patient_id = users.find_by_email(@appointment.)
-    elsif ( current_user.type == 'Patient')
-      doctor_id = params[:doctor_id]
-    end
+    #elsif ( current_user.type == 'Patient')
+      residence_id = params[:residence_id]
+      @residence = Residence.find(residence_id)
+      doctor_id = @residence.doctor_id
+      office_id = @residence.office_id
+    #end
 
-    @doctor = Doctor.find(doctor_id)
+    #@doctor = Doctor.find(doctor_id)
 
-    @appointments = @doctor.appointments.all
+    @appointments = @residence.appointments.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -28,8 +31,14 @@ class AppointmentsController < ApplicationController
   # GET /appointments/1
   # GET /appointments/1.json
   def show
-    if( @appointment = current_user.appointments.find(params[:id]) )
-    end
+    
+    residence_id = params[:residence_id]
+    @residence = Residence.find(residence_id)
+    doctor_id = @residence.doctor_id
+    office_id = @residence.office_id
+    
+    @appointment = @residence.appointments.find(params[:id]) 
+    
 
     respond_to do |format|
       format.html # show.html.erb
@@ -39,8 +48,11 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments/new
   def new
-    @appointment = current_user.appointments.new
-		@timeslot ||= 30	# should be populated by docotr settings
+    residence_id = params[:residence_id]
+    @residence = Residence.find(residence_id)
+
+    @appointment = @residence.appointments.new
+		@timeslot ||= @residence.slot_minutes	# should be populated by docotr settings
     @appointment.allDay ||= false
 
     if(params[:startdate])
@@ -51,15 +63,15 @@ class AppointmentsController < ApplicationController
     end
 
 
-    if ( current_user.type == 'Doctor')
-      @appointment.doctor_id= current_user.id
+    if ( current_user.type == 'Doctor' || current_user.type == 'Office')
+      @appointment.residence_id= residence_id
       #@appointment.patient_id = users.find_by_email(@appointment.)
     elsif ( current_user.type == 'Patient')
       @appointment.patient_id = current_user.id
-      @appointment.doctor_id = params[:doctor_id]
+      @appointment.residence_id = residence_id
     end
   
-    @doctor = Doctor.find(@appointment.doctor_id)
+    @doctor = Doctor.find(@residence.doctor_id)
     
 
     respond_to do |format|
@@ -71,10 +83,15 @@ class AppointmentsController < ApplicationController
 
   # GET /appointments/1/edit
   def edit
-    @appointment = current_user.appointments.find(params[:id])
-    @doctor = Doctor.find(@appointment.doctor_id)
+    residence_id = params[:residence_id]
+    @residence = Residence.find(residence_id)
+
+    @appointment = @residence.appointments.find(params[:id])
+
+    @doctor = Doctor.find(@residence.doctor_id)
     @patient = Patient.find(@appointment.patient_id)
-    @timeslot = params[:slotminutes].to_f
+
+    @timeslot = @residence.slot_minutes
 
     respond_to do |format|
       format.html
@@ -86,22 +103,24 @@ class AppointmentsController < ApplicationController
   # POST /appointments
   # POST /appointments.json
   def create
-    @appointment = current_user.appointments.build(params[:appointment])
+    residence_id = params[:residence_id]
+    @residence = Residence.find(residence_id)
+    @appointment = @residence.appointments.build(params[:appointment])
 		#@appointment.start = DateTime.strptime(params[:appointment][:start], '%m/%d/%Y %H:%M')
 		#@appointment.end = DateTime.strptime(params[:appointment][:end],'%m/%d/%Y %H:%M')
-    if ( current_user.type == 'Doctor')
-      @appointment.doctor_id= current_user.id
+    if ( current_user.type == 'Doctor' || current_user.type == 'Office' )
+      @appointment.residence_id= residence_id
       #@appointment.patient_id = users.find_by_email(@appointment.)
     elsif ( current_user.type == 'Patient')
       @appointment.patient_id = current_user.id
-      @appointment.doctor_id = params[:doctor_id]
+      @appointment.residence_id= residence_id
     end
 
-    @doctor = Doctor.find(@appointment.doctor_id)
+    @doctor = Doctor.find(@residence.doctor_id)
 
     respond_to do |format|
       if @appointment.save
-        format.html { redirect_to @doctor, notice: 'Appointment was successfully created.' }
+        format.html { redirect_to @residence, notice: 'Appointment was successfully created.' }
         format.json { render json: @appointment, status: :created, location: @appointment }
         format.js { render :layout => false }
       else
@@ -116,12 +135,14 @@ class AppointmentsController < ApplicationController
   # PUT /appointments/1
   # PUT /appointments/1.json
   def update
-    @appointment = current_user.appointments.find(params[:id])
-    @doctor = Doctor.find(@appointment.doctor_id)
+    residence_id = params[:residence_id]
+    @residence = Residence.find(residence_id)
+    @appointment = @residence.appointments.find(params[:id])
+    @doctor = Doctor.find(@residence.doctor_id)
 
     respond_to do |format|
       if @appointment.update_attributes(params[:appointment])
-        format.html { redirect_to @doctor, notice: 'Appointment was successfully updated.' }
+        format.html { redirect_to @residence, notice: 'Appointment was successfully updated.' }
         format.json { head :no_content }
       else
         flash.now[:error] = "Could not edit appointment"
@@ -135,11 +156,13 @@ class AppointmentsController < ApplicationController
   # DELETE /appointments/1.json
   def destroy
     # @appointment.destroy
-    @appointment = current_user.appointments.find(params[:id])
-    @doctor = Doctor.find(@appointment.doctor_id)
+    residence_id = params[:residence_id]
+    @residence = Residence.find(residence_id)
+    @appointment = @residence.appointments.find(params[:id])
+    @doctor = Doctor.find(@residence.doctor_id)
     @appointment.destroy
     respond_to do |format|
-      format.html { redirect_to @doctor,    notice:  " Appointment was successfully canceled."}
+      format.html { redirect_to @residence,    notice:  " Appointment was successfully canceled."}
       format.js
     end
   end
@@ -147,7 +170,13 @@ class AppointmentsController < ApplicationController
   private
 
     def correct_user
-      @appointment = current_user.appointments.find_by_id(params[:id])
+      residence_id = params[:residence_id]
+      @residence = Residence.find(residence_id)
+
+      @appointment ||= current_user.appointments.find_by_id(params[:id])
+
+      @appointment ||= @residence.appointments.find_by_id(params[:id])
+
       redirect_to root_url if @appointment.nil?
     end
 

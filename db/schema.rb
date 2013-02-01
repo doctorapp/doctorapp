@@ -14,7 +14,6 @@
 ActiveRecord::Schema.define(:version => 20130131202852) do
 
   create_table "appointments", :force => true do |t|
-    t.integer  "doctor_id"
     t.integer  "patient_id"
     t.string   "title"
     t.boolean  "allDay"
@@ -149,6 +148,16 @@ ActiveRecord::Schema.define(:version => 20130131202852) do
   add_index "residences", ["doctor_id", "office_id"], :name => "index_residences_on_doctor_id_and_office_id", :unique => true
   add_index "residences", ["doctor_id"], :name => "index_residences_on_doctor_id"
   add_index "residences", ["office_id"], :name => "index_residences_on_office_id"
+
+  create_table "searches", :force => true do |t|
+    t.datetime "start"
+    t.datetime "end"
+    t.integer  "post_code"
+    t.integer  "domain_id"
+    t.integer  "language_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

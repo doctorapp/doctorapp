@@ -59,9 +59,9 @@ function showEventDetails(event){
     title = event.title;
     start = event.start;
     patientId = event.patient_id;
-    doctorId = event.doctor_id;
+    residenceId = event.residence_id;
 
-    $('#event_desc').html("Start time: "+start+"</br> patientId: "+patientId+"</br> doctorId: "+doctorId);
+    $('#event_desc').html("Start time: "+start+"</br> patientId: "+patientId+"</br> residenceId: "+residenceId);
     $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ")'>Edit</a>");
     /*if (event.recurring) {
         title = event.title + "(Recurring)";
@@ -94,11 +94,11 @@ function showEventDetails(event){
 
 
 function createEvent(startdate,enddate,allDay){
-    slotMinutes = $.fullCalendar.passedOptions['slotMinutes'];
+    
 
 
     jQuery.ajax({
-        data: 'slotminutes='+slotMinutes+ '&startdate='+startdate+ '&enddate='+enddate+ '&allDay='+allDay,
+        data: '&startdate='+startdate+ '&enddate='+enddate+ '&allDay='+allDay,
         dataType: 'script',
         type: 'get',
         success: function(data) {alert("success created") },
@@ -111,10 +111,10 @@ function createEvent(startdate,enddate,allDay){
 }
 
 function editEvent(event_id){
-    slotMinutes = $.fullCalendar.passedOptions['slotMinutes'];
+    
     
     jQuery.ajax({
-        data: 'id=' + event_id+'&slotminutes='+slotMinutes,
+        data: 'id=' + event_id,
         dataType: 'script',
         type: 'get',
         success: function(data) {},

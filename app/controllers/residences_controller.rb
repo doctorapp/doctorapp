@@ -15,8 +15,9 @@ class ResidencesController < ApplicationController
 	end
 
 	def show
-		@doctor = Doctor.find(params[:doctor_id])
+		#@doctor = Doctor.find(params[:doctor_id])
 		@residence = Residence.find(params[:id])
+		@doctor=Doctor.find(@residence.doctor_id)
 	end
 	
 	def pending

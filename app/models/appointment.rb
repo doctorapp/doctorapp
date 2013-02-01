@@ -1,5 +1,5 @@
 class Appointment < ActiveRecord::Base
-  attr_accessible :residence_id, :title, :start, :end, :allDay
+  attr_accessible :residence_id, :patient_id,:title, :start, :end, :allDay
 
 	belongs_to :patient
 	belongs_to :residence
@@ -27,7 +27,7 @@ class Appointment < ActiveRecord::Base
 
 		def check_conflict
 			#@appointments = Appointment.where("doctor_id= ? and ( start between ? AND ? or end between ? and ?) ", self[:doctor_id],self[:start], self[:end], self[:start],self[:end]) 
-			@appointments = Appointment.where("doctor_id= ? and ( ( start < ? AND  end > ? ) or ( start < ? and end > ? ) or (start > ? and start < ?))", self[:doctor_id],self[:start], self[:start], self[:end], self[:end], self[:start], self[:end])
+			@appointments = Appointment.where("residence_id= ? and ( ( start < ? AND  end > ? ) or ( start < ? and end > ? ) or (start > ? and start < ?))", self[:residence_id],self[:start], self[:start], self[:end], self[:end], self[:start], self[:end])
 			#@appointments = Appointment.where("doctor_id= ?",202)
 			
 			if @appointments.any?
