@@ -1,16 +1,14 @@
 class Appointment < ActiveRecord::Base
-  attr_accessible :doctor_id, :patient_id, :title, :start, :end, :allDay
+  attr_accessible :residence_id, :title, :start, :end, :allDay
 
 	belongs_to :patient
-	belongs_to :doctor
-
+	belongs_to :residence
 
 	validates :title, presence: true
 	validates :start, presence: true
 	validates :end, presence: true
-	validates :doctor_id, presence: true
 	validates :patient_id, presence: true
-	
+	validates :residence_id, presence: true
 	validate :start_datetime_cannot_after_end_datetime
 	validate :check_conflict
 

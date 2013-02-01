@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130129095105) do
+ActiveRecord::Schema.define(:version => 20130131202852) do
 
   create_table "appointments", :force => true do |t|
     t.integer  "doctor_id"
@@ -23,12 +23,13 @@ ActiveRecord::Schema.define(:version => 20130129095105) do
     t.string   "url"
     t.boolean  "editable"
     t.string   "source"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "residence_id"
   end
 
-  add_index "appointments", ["doctor_id"], :name => "index_appointments_on_doctor_id"
   add_index "appointments", ["patient_id"], :name => "index_appointments_on_patient_id"
+  add_index "appointments", ["residence_id"], :name => "index_appointments_on_residence_id"
 
   create_table "calendar_settings", :force => true do |t|
     t.integer  "doctor_id"
@@ -114,8 +115,10 @@ ActiveRecord::Schema.define(:version => 20130129095105) do
 
   create_table "federal_holidays", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.string   "chronic_pattern"
+    t.string   "base_date"
   end
 
   create_table "languages", :force => true do |t|
@@ -143,18 +146,9 @@ ActiveRecord::Schema.define(:version => 20130129095105) do
   end
 
   add_index "residences", ["approved"], :name => "index_residences_on_approved"
+  add_index "residences", ["doctor_id", "office_id"], :name => "index_residences_on_doctor_id_and_office_id", :unique => true
   add_index "residences", ["doctor_id"], :name => "index_residences_on_doctor_id"
   add_index "residences", ["office_id"], :name => "index_residences_on_office_id"
-
-  create_table "searches", :force => true do |t|
-    t.datetime "start"
-    t.datetime "end"
-    t.integer  "post_code"
-    t.integer  "domain_id"
-    t.integer  "language_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

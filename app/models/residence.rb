@@ -5,6 +5,8 @@ class Residence < ActiveRecord::Base
 	belongs_to :doctor
 	belongs_to :office
 	
+	has_many :appointments, dependent: :destroy
+
 	validates :doctor_id, presence: true
 	validates :office_id, presence: true
 

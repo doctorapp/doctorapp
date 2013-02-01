@@ -17,15 +17,17 @@ resources :searches
     member do
       get :doctor_appointments
     end
-    
   	resources :vacations, only: [:new, :create, :index, :show, :destroy]
+		resources :residences, only: [:index, :show, :edit, :update]
   end
 
 	resources :offices
-  
-	resources :residences do  
+
+	
+	resources :residences, only: [:create, :destroy, :update] do   # no direct access to residences, except javascript create/destroy
 		collection do
 			get :pending
+			get :managed
 		end
     resources :appointments 
 	end
@@ -35,10 +37,6 @@ resources :searches
 	resources :favorite_doctors, only: [:create, :destroy]
   resources :password_resets
 	#resources :vacations,	only: [:new, :create, :index, :show, :destroy]
-
-  
-
-
 
 	root to: 'static_pages#home'
 

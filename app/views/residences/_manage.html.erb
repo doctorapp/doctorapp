@@ -1,0 +1,4 @@
+<%= form_for(current_user.residences.build(doctor_id: @doctor.id), remote: true)  do |f| %>
+	<div><%= f.hidden_field :doctor_id %></div>
+	<%= f.submit "Manage", class: "btn btn-large btn-primary" %>
+<% end %>
